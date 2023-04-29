@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda</title>
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="shortcut icon" href="IMG/personal-agenda.ico" type="image/x-icon">
+    <!-- ICONS -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="gretting-container">
+        <i class='bx bxs-bookmark'></i>
+        <h2 class="gretting">Hi, User.name 👋🏽</h2>
+    </div>
+    <nav class="menu">
+        <ul>
+            <li><a href="#"><i class='bx bxs-star'></i></a></li>
+            <li><a href="#"><i class='bx bxs-calendar'></i></a></li>
+            <li><a href="#"><i class='bx bxs-user'></i></a></li>
+            <li><a href="#"><i class='bx bxs-sun' ></i></a></li>
+            <li><a href="#"><i class='bx bxs-bell'></i></a></li>
+        </ul>
+    </nav>
+    <h1>Tasks</h1>
+    <div class="container-task">
+        <lu class="task-list">
+        </lu>
+    </div>
+
+    <div class="container-form-tasks">
+        <i class='bx bxs-plus-circle'></i>
+        <form method="post"  id="form-tasks">
+            <div class="close-btn"><i class='bx bxs-x-circle'></i></div>
+            <label>Title</label>
+            <input type="text" name="title" id="title">
+            <label>Content</label>
+            <input type="text" name="content" id="content">
+            <label>Guests</label>
+            <div class="container-guests">
+                <input type="email" name="guests" id="guests">
+                <i class='bx bxs-trash-alt'></i>
+                <i class='bx bxs-check-circle'></i>
+            </div>
+            <input type="submit" value="Send" onclick="creatorTasks(event)">
+        </form>
+    </div>
+
+    <script src="JS/main.js"></script>
+</body>
+</html>

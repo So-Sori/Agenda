@@ -1,0 +1,47 @@
+/* Monsertar */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300;400;500;600&display=swap');
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+body{
+    margin-bottom: 20%;
+}
+.menu{
+    width: 100%;
+    height: auto;
+    position: fixed;
+    bottom: 0;
+}
+.menu ul{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(167, 167, 167);
+}
+.menu ul li{
+    width: 25%;
+    height: auto;
+    list-style: none;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menu .bx{
+    font-size: 8vw;
+    text-decoration: none;
+    color: black;
+}
+.bxs-plus-circle{
+    font-size: 4vw;
+    margin: 20px;
+}
+form{
+    display: none;
+}
