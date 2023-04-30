@@ -1,9 +1,24 @@
-
 let ul = document.querySelector('.task-list');
 let title = document.getElementById("title");
 let content = document.getElementById("content");
 let guests = document.getElementById("guests");
+let gretting = document.querySelector(".gretting");
 
+// Saludo de bienvenida
+let time = new Date();
+let now = time.toLocaleTimeString();
+if (now < '12:00:00 p.m.') {
+  gretting.textContent = `Good Morning 👋🏽`;
+}
+else if(now <= '6:00:00 p.m.'){
+  gretting.textContent = `Good Afternoon👋🏽`;
+}
+else if(now >= '6:00:00 p.m.'){
+  gretting.textContent = `Good Evening 👋🏽`;
+}
+else {
+  gretting.textContent = `Hi, welcome 👋🏽`;
+}
 
 function creatorTasks(event) {
   event.preventDefault();
