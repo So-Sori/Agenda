@@ -33,13 +33,9 @@ function fetchDataFiveDays(position){
     fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`)
     .then(res => res.json())
     .then(data => {
-        for (let i = 0; i <= data.list.length; i+=8) {
-            let date = new Date(data.list[i].dt_txt);
-            let weekday = date.getDay();
-            // console.log(weekDay[weekday]);
-        }
+        createFiveDaysWeather(data);
     })
-    .catch(error => console.log(error))
+    .catch(error => console.log(error));
 }
 
 function weatherLocal() {
@@ -55,13 +51,33 @@ function createCardCurrentTime(weather) {
 
     ubication.textContent = weather.name
     
-    weatherImg.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Weather-overcast.svg/1024px-Weather-overcast.svg.png" //Imagen de prueba
+    weatherImg.src = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`;
 
     weatherTime.textContent = weather.weather[0].main;
 
-    temp.innerHTML = `Temperature <br>${Math.floor(weather.main.temp)}`;
-    humd.innerHTML = `Humidity <br>${weather.main.humidity}`;
-    wind.innerHTML = `Wind <br>${Math.floor(weather.wind.speed)}`;
+    temp.innerHTML = `Temperature <br>${Math.round(weather.main.temp)} °C`;
+    humd.innerHTML = `Humidity <br>${weather.main.humidity}%`;
+    wind.innerHTML = `Wind <br>${Math.round(weather.wind.speed)} M/S`;
+}
+function createFiveDaysWeather(weather) {
+    let lis = document.querySelectorAll(".card-far-weather");
+    let count = 0;
+
+    for (let i = 0; i <= weather.list.length; i+=8) {
+        let date = new Date(weather.list[i].dt_txt);
+        let weekday = date.getDay();
+
+        // lis[count].innerHTML = `${weekDay[weekday]}<br>${Math.round(weather.list[i].main.temp)} °C<br>${weather.list[i].weather[0].main}`;
+        
+        lis[count].innerHTML = `
+            <h2>${weekDay[weekday]}</h2>
+            <p>${Math.round(weather.list[i].main.temp)}°C</p>
+            <img src="https://openweathermap.org/img/wn/${weather.list[i].weather[0].icon}@4x.png" alt="weather ${weather.list[i].weather[0].main}">
+            <p>${weather.list[i].weather[0].main}</p>
+            `;
+        count++;
+    }
+    console.log(lis[count]);
 }
 
 export {weatherLocal}
