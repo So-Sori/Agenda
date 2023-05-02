@@ -1,3 +1,5 @@
+import { weatherLocal } from "./weather.js";
+
 let ul = document.querySelector('.task-list');
 let title = document.getElementById("title");
 let content = document.getElementById("content");
@@ -65,11 +67,10 @@ function DeleteBtn(){
     return iconTrash;
     
 }
-
+// TASK INTERACTIVIDAD
 let addBtn = document.querySelector(".bxs-plus-circle");
 let sendBtn = document.getElementById("send-btn");
 let closeBtn = document.querySelector(".bxs-x-circle");
-let checkBtn = document.querySelector(".bxs-check-circle");
 
 addBtn.addEventListener("click",()=>{
   let formTasks = document.getElementById("form-tasks");
@@ -80,3 +81,32 @@ closeBtn.addEventListener("click",()=>{
   let formTasks = document.getElementById("form-tasks");
   formTasks.style.display = "none";
 });
+// MENU PAGINACION
+let home = document.querySelector(".bxs-star");
+let calendar = document.querySelector(".bxs-calendar");
+let weather = document.querySelector(".bxs-sun");
+let bell = document.querySelector(".bxs-bell");
+
+let sectionTask = document.getElementById("task");
+let sectionSchedule = document.getElementById("scheduler");
+let sectionWeather = document.getElementById("weather");
+
+home.addEventListener("click",()=>{
+  sectionTask.style.display = "block";
+  sectionSchedule.style.display = "none";
+  sectionWeather.style.display = "none";
+})
+calendar.addEventListener("click",()=>{
+    sectionSchedule.style.display = "block";
+    sectionTask.style.display = "none";
+    sectionWeather.style.display = "none";
+})
+weather.addEventListener("click",()=>{
+  sectionSchedule.style.display = "none";
+  sectionTask.style.display = "none";
+  sectionWeather.style.display = "block";
+
+  weatherLocal()
+})
+bell.addEventListener("click",()=>{
+})

@@ -25,44 +25,76 @@
     </div>
     <nav class="menu">
         <ul>
-            <li><a href="#"><i class='bx bxs-star'></i></a></li>
-            <li><a href="#"><i class='bx bxs-calendar'></i></a></li>
-            <li><a href="#"><i class='bx bxs-user'></i></a></li>
-            <li><a href="#"><i class='bx bxs-sun' ></i></a></li>
-            <li><a href="#"><i class='bx bxs-bell'></i></a></li>
+            <li><i class='bx bxs-star'></i></li>
+            <li><i class='bx bxs-calendar'></i></li>
+            <li><i class='bx bxs-sun' ></i></li>
+            <li><i class='bx bxs-bell'></i></li>
         </ul>
     </nav>
-    <h1>Tasks</h1>
-    <div class="container-task">
-        <lu class="task-list">
-        </lu>
-    </div>
-
-    <div class="container-form-tasks">
-        <i class='bx bxs-plus-circle'></i>
-        <form method="post"  id="form-tasks">
-            <div class="close-btn"><i class='bx bxs-x-circle'></i></div>
-            <label>Title</label>
-            <input type="text" name="title" id="title">
-            <label>Content</label>
-            <input type="text" name="content" id="content">
-            <label>Guests</label>
-            <div class="container-guests">
-                <input type="email" name="guests" id="guests">
-                <i class='bx bxs-trash-alt'></i>
-                <i class='bx bxs-check-circle'></i>
-            </div>
-            <input type="submit" value="Send" onclick="creatorTasks(event)">
-        </form>
-    </div>
+    <section id="task">
+        <h1>Tasks</h1>
+        <div class="container-task">
+            <lu class="task-list">
+            </lu>
+        </div>
     
+        <div class="container-form-tasks">
+            <i class='bx bxs-plus-circle'></i>
+            <form method="post"  id="form-tasks">
+                <div class="close-btn"><i class='bx bxs-x-circle'></i></div>
+                <label>Title</label>
+                <input type="text" name="title" id="title">
+                <label>Content</label>
+                <input type="text" name="content" id="content">
+                <label>Guests</label>
+                <div class="container-guests">
+                    <input type="email" name="guests" id="guests">
+                    <i class='bx bxs-trash-alt'></i>
+                    <i class='bx bxs-check-circle'></i>
+                </div>
+                <input type="submit" value="Send" onclick="creatorTasks(event)">
+            </form>
+        </div>
+    </section>
+    
+    <section id="scheduler">
+        <div class="demo-container">
+            <div class="long-title"><h3>Tasks in group</h3></div>
+            <div id="scheduler"></div>
+          </div>
+    </section>
 
-    <div class="demo-container">
-        <div class="long-title"><h3>Tasks in group</h3></div>
-        <div id="scheduler"></div>
-      </div>
+    <section id="weather">
+        <div class="weather-design">
+            <h3>Daily<br>weather</h3>
+            <img src="IMG/weather-design.jpg" alt="people with umbrella">
+        </div>
+        <div class="current-weather-info">
+            <p id="week-day"></p>
+            <h2 id="ubication"></h2>
+            <div class="container-weather-img">
+                <img src="" alt="weather" id="weather-img">
+            </div>
+            <h3 id="weather-time"></h3>
+            <ul>
+                <li id="temp"></li>
+                <li id="humd"></li>
+                <li id="wind"></li>
+            </ul>
+        </div>
+        <div class="five-days-weather">
+            <ul>
+                <li class="card-far-weather"></li>
+                <li class="card-far-weather"></li>
+                <li class="card-far-weather"></li>
+                <li class="card-far-weather"></li>
+                <li class="card-far-weather"></li>
+            </ul>
+        </div>
+    
+    </section>
 
-    <script src="JS/main.js"></script>
+    <script src="JS/main.js" type="module"></script>
     
     <script src="JS/scheduleLocal.js"></script>
     <script src="JS/data.js"></script>
