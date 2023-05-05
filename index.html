@@ -34,25 +34,19 @@
     <section id="task">
         <h1>Tasks</h1>
         <div class="container-task">
-            <lu class="task-list">
-            </lu>
+            <h3 id="empty">Empty task list</h3>
+            <lu class="task-list"></lu>
         </div>
     
         <div class="container-form-tasks">
             <i class='bx bxs-plus-circle'></i>
-            <form method="post"  id="form-tasks">
+            <form id="form-tasks">
                 <div class="close-btn"><i class='bx bxs-x-circle'></i></div>
                 <label>Title</label>
                 <input type="text" name="title" id="title">
                 <label>Content</label>
                 <input type="text" name="content" id="content">
-                <label>Guests</label>
-                <div class="container-guests">
-                    <input type="email" name="guests" id="guests">
-                    <i class='bx bxs-trash-alt'></i>
-                    <i class='bx bxs-check-circle'></i>
-                </div>
-                <input type="submit" value="Send" onclick="creatorTasks(event)">
+                <input type="submit" value="Send" id="send-btn">
             </form>
         </div>
     </section>
