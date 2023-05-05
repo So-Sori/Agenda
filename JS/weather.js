@@ -1,4 +1,3 @@
-let weatherBtn = document.querySelector(".bxs-sun");
 let day= document.getElementById("week-day");
 let ubication= document.getElementById("ubication");
 let weatherImg= document.getElementById("weather-img");
@@ -23,7 +22,6 @@ function fetchData(position){
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`)
     .then(res => res.json())
     .then(data => {
-        console.log(data);
         createCardCurrentTime(data);
     })
 }
@@ -35,7 +33,7 @@ function fetchDataFiveDays(position){
     .then(data => {
         createFiveDaysWeather(data);
     })
-    .catch(error => console.log(error));
+    .catch(error => error);
 }
 
 function weatherLocal() {
@@ -46,7 +44,7 @@ function weatherLocal() {
 function createCardCurrentTime(weather) {
     let currentDay = new Date();
     let weekday = currentDay.getDay();
-    let completeDate = `${weekDay[weekday]} ${currentDay.getDate()}• ${currentDay.getMonth()} •${currentDay.getFullYear()}`;
+    let completeDate = `${weekDay[weekday]} ${currentDay.getDate()} • ${currentDay.getMonth()} • ${currentDay.getFullYear()}`;
     day.textContent = completeDate;
 
     ubication.textContent = weather.name
@@ -55,9 +53,9 @@ function createCardCurrentTime(weather) {
 
     weatherTime.textContent = weather.weather[0].main;
 
-    temp.innerHTML = `Temperature <br>${Math.round(weather.main.temp)} °C`;
+    temp.innerHTML = `Temperature <br>${Math.round(weather.main.temp)}<span>°C</span>`;
     humd.innerHTML = `Humidity <br>${weather.main.humidity}%`;
-    wind.innerHTML = `Wind <br>${Math.round(weather.wind.speed)} M/S`;
+    wind.innerHTML = `Wind <br>${Math.round(weather.wind.speed)}M/S`;
 }
 function createFiveDaysWeather(weather) {
     let lis = document.querySelectorAll(".card-far-weather");
@@ -66,8 +64,6 @@ function createFiveDaysWeather(weather) {
     for (let i = 0; i <= weather.list.length; i+=8) {
         let date = new Date(weather.list[i].dt_txt);
         let weekday = date.getDay();
-
-        // lis[count].innerHTML = `${weekDay[weekday]}<br>${Math.round(weather.list[i].main.temp)} °C<br>${weather.list[i].weather[0].main}`;
         
         lis[count].innerHTML = `
             <h2>${weekDay[weekday]}</h2>
@@ -77,7 +73,6 @@ function createFiveDaysWeather(weather) {
             `;
         count++;
     }
-    console.log(lis[count]);
 }
 
 export {weatherLocal}
