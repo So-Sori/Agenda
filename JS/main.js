@@ -12,18 +12,14 @@ getStorageTask();
 
 // Saludo de bienvenida
 let time = new Date();
-let now = time.toLocaleTimeString();
-if (now < '12:00:00 p.m.') {
-  gretting.textContent = `Good Morning 👋🏽`;
-}
-else if(now <= '6:00:00 p.m.'){
-  gretting.textContent = `Good Afternoon👋🏽`;
-}
-else if(now >= '6:00:00 p.m.'){
-  gretting.textContent = `Good Evening 👋🏽`;
-}
-else {
-  gretting.textContent = `Hi, welcome 👋🏽`;
+let now = time.getHours();
+console.log(now);
+if (now < 12) {
+  gretting.textContent = `Good Morning! 👋🏽`;
+} else if (now < 18) {
+  gretting.textContent = `Good Afternoon! 👋🏽`;
+} else {
+  gretting.textContent = `Good Evening! 👋🏽`;
 }
 
 sendBtn.addEventListener("click",event => {
