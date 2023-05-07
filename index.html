@@ -17,6 +17,7 @@
     
     <!-- DevExtreme library -->
     <script type="text/javascript" src="https://cdn3.devexpress.com/jslib/22.2.6/js/dx.all.js"></script>
+
 </head>
 <body>
     <div class="gretting-container">
@@ -50,12 +51,16 @@
             </form>
         </div>
     </section>
-    
+
     <section id="scheduler">
-        <div class="demo-container">
-            <div class="long-title"><h3>Tasks in group</h3></div>
-            <div id="scheduler"></div>
-          </div>
+        <div id="calendar"></div>
+        <div class="eventos" id="eventos">
+            <h2 id="name-calendar"></h2>
+            <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
+            <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
+        
+            <pre id="content" style="white-space: pre-wrap;"></pre>
+        </div>
     </section>
 
     <section id="weather">
@@ -89,8 +94,9 @@
     </section>
 
     <script src="JS/main.js" type="module"></script>
-    
-    <script src="JS/scheduleLocal.js"></script>
-    <script src="JS/data.js"></script>
+    <script src="JS/calendarAPI.js"></script>
+
+    <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
+    <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
 </body>
 </html>
