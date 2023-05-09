@@ -53,9 +53,9 @@ function createCardCurrentTime(weather) {
 
     weatherTime.textContent = weather.weather[0].main;
 
-    temp.innerHTML = `Temperature <br>${Math.round(weather.main.temp)}<span>°C</span>`;
-    humd.innerHTML = `Humidity <br>${weather.main.humidity}%`;
-    wind.innerHTML = `Wind <br>${Math.round(weather.wind.speed)}M/S`;
+    temp.innerHTML = `<h4>Temp</h4><p>${Math.round(weather.main.temp)}°C</p>`;
+    humd.innerHTML = `<h4>Humd</h4><p>${weather.main.humidity}%</p>`;
+    wind.innerHTML = `<h4>Wind</h4><p>${Math.round(weather.wind.speed)}M/S</p>`;
 }
 function createFiveDaysWeather(weather) {
     let lis = document.querySelectorAll(".card-far-weather");
@@ -69,7 +69,7 @@ function createFiveDaysWeather(weather) {
             <h2>${weekDay[weekday]}</h2>
             <p>${Math.round(weather.list[i].main.temp)}°C</p>
             <img src="https://openweathermap.org/img/wn/${weather.list[i].weather[0].icon}@4x.png" alt="weather ${weather.list[i].weather[0].main}">
-            <p>${weather.list[i].weather[0].main}</p>
+            <p class="weather-time">${weather.list[i].weather[0].main}</p>
             `;
         count++;
     }
