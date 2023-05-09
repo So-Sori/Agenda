@@ -6,20 +6,24 @@ let content = document.getElementById("content");
 let gretting = document.querySelector(".gretting");
 let sendBtn = document.getElementById("send-btn");
 let empty = document.getElementById("empty");
+let formTasks = document.getElementById("form-tasks");
+let tasks = JSON.parse(localStorage.getItem("listTask"));
 let listTask = [];
 
-getStorageTask();
+if (tasks !== null) {
+    getStorageTask();
+    empty.style.display = "none";
+}
 
 // Saludo de bienvenida
 let time = new Date();
 let now = time.getHours();
-console.log(now);
 if (now < 12) {
-  gretting.textContent = `Good Morning! 👋🏽`;
+  gretting.textContent = `Good Morning!`;
 } else if (now < 18) {
-  gretting.textContent = `Good Afternoon! 👋🏽`;
+  gretting.textContent = `Good Afternoon!`;
 } else {
-  gretting.textContent = `Good Evening! 👋🏽`;
+  gretting.textContent = `Good Evening!`;
 }
 
 sendBtn.addEventListener("click",event => {
@@ -30,8 +34,10 @@ sendBtn.addEventListener("click",event => {
 
   if(title.value !== ''){
     task.innerHTML = `
+    <div class="text-task">
       <h2>${title.value}</h2>
       <p>${content.value}</p>
+  </div>
     `;    
     task.appendChild(deleteBtn())
     ul.appendChild(task);
@@ -58,10 +64,11 @@ function deleteBtn(){
         ul.removeChild(item);
 
         let tasks = JSON.parse(localStorage.getItem("listTask"));
+        
         // Eliminar elementos del storage
         for (let i = 0; i < tasks.length; i++) {
-          let taskValue = item.children[0].innerHTML
-          if (taskValue === tasks[i].title) {
+          let taskTitle = item.children[0].childNodes[1].innerHTML
+          if (taskTitle === tasks[i].title) {
               tasks.splice(i,1);
               localStorage.setItem("listTask",JSON.stringify(tasks));
           }
@@ -86,8 +93,10 @@ function getStorageTask(){
       ("li");
       task.classList.add("task");
       task.innerHTML = `
+      <div class="text-task">
         <h2>${taskValue.title}</h2>
         <p>${taskValue.content}</p>
+      </div>
       `;    
       task.appendChild(deleteBtn())
       ul.appendChild(task)
@@ -99,13 +108,10 @@ let addBtn = document.querySelector(".bxs-plus-circle");
 let closeBtn = document.querySelector(".bxs-x-circle");
 
 addBtn.addEventListener("click",()=>{
-  let formTasks = document.getElementById("form-tasks");
-  formTasks.style.display = "block";
+  formTasks.classList.add("visible")
 });
-
 closeBtn.addEventListener("click",()=>{
-  let formTasks = document.getElementById("form-tasks");
-  formTasks.style.display = "none";
+  formTasks.classList.remove("visible");
 });
 // MENU PAGINACION
 let home = document.querySelector(".bxs-star");

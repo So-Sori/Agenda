@@ -33,40 +33,43 @@
         </ul>
     </nav>
     <section id="task">
-        <h1>Tasks</h1>
+        <div class="container-task-plus">
+            <h1>Tasks</h1><i class='bx bxs-plus-circle'></i>
+        </div>
         <div class="container-task">
             <h3 id="empty">Empty task list</h3>
             <lu class="task-list"></lu>
         </div>
     
         <div class="container-form-tasks">
-            <i class='bx bxs-plus-circle'></i>
             <form id="form-tasks">
                 <div class="close-btn"><i class='bx bxs-x-circle'></i></div>
                 <label>Title</label>
                 <input type="text" name="title" id="title">
                 <label>Content</label>
                 <input type="text" name="content" id="content">
-                <input type="submit" value="Send" id="send-btn">
+                <input type="submit" value="new task" id="send-btn">
             </form>
         </div>
     </section>
 
     <section id="scheduler">
         <div id="calendar"></div>
-        <div class="eventos" id="eventos">
-            <h2 id="name-calendar"></h2>
+        <h3 class="schedule-title">Events</h3>
+        <div class="btns-container">
             <button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
             <button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
         
             <pre id="content" style="white-space: pre-wrap;"></pre>
         </div>
+        <div class="events" id="events">
+            <h2 id="name-calendar"></h2>
+        </div>
     </section>
 
     <section id="weather">
         <div class="weather-design">
-            <h3>Daily<br>weather</h3>
-            <img src="IMG/weather-design.jpg" alt="people with umbrella">
+            <h3>Daily<br><span>weather</span></h3>
         </div>
         <div class="current-weather-info">
             <p id="week-day"></p>
