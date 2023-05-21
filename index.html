@@ -20,10 +20,6 @@
 
 </head>
 <body>
-    <div class="gretting-container">
-        <i class='bx bxs-bookmark'></i>
-        <h2 class="gretting"></h2>
-    </div>
     <nav class="menu">
         <ul>
             <li><i class='bx bxs-star'></i></li>
@@ -48,7 +44,7 @@
                 <input type="text" name="title" id="title">
                 <label>Content</label>
                 <input type="text" name="content" id="content">
-                <input type="submit" value="new task" id="send-btn">
+                <div class="submit-container"><input type="submit" value="new task" id="send-btn"></div>
             </form>
         </div>
     </section>
@@ -62,13 +58,28 @@
         
             <pre id="content" style="white-space: pre-wrap;"></pre>
         </div>
+        <div class="container-form-events">
+            <form id="form-events">
+                <div class="close-btn"><i class='bx bxs-x-circle'></i></div>
+               <label>Summary</label>
+               <input type="text" name="summary" id="summary">
+               <label>Start</label>
+               <input type="datetime-local" name="start" id="start">
+               <label>End</label>
+               <input type="datetime-local" name="end" id="end">
+               <label>Description</label>
+               <input type="text" name="description" id="description">
+               <label>Inveted</label>
+               <input type="email" name="inveted" id="inveted" placeholder="example@email.com,example@email.com">
+            </form>
+        </div>
+        <i class='bx bxs-plus-circle' id="events-add-btn"></i>
         <div class="events" id="events">
-            <h2 id="name-calendar"></h2>
         </div>
     </section>
 
     <section id="weather">
-        <div class="weather-design">
+        <div class="weather-title">
             <h3>Daily<br><span>weather</span></h3>
         </div>
         <div class="current-weather-info">

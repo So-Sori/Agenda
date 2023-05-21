@@ -11,7 +11,21 @@ const CALENDAR_ID = 'primary';
 const API_KEY = 'AIzaSyCSnNDQ8GMjmwRit7DWOQVAbvVTvnITaUY';
 const CLIENT_ID = '273520073899-hk28up4luntj9v55qhq4lo8eni2efm78.apps.googleusercontent.com';
 const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
-const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events';
+const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar';
+
+let formEvents = document.getElementById("form-events");
+let closeBtn = document.querySelector("#form-events .bxs-x-circle");
+let events = document.getElementById("events");
+
+let currentEvent = '';
+let summary = document.getElementById("summary");
+let start = document.getElementById("start");
+let end = document.getElementById("end");
+let description = document.getElementById("description");
+let addEventBtn = document.getElementById("events-add-btn");
+
+let createBtn = document.createElement("input");
+let editEvent = document.createElement("input");
 
 //CODIGO FROM GOOGLE
 let tokenClient;
@@ -57,7 +71,8 @@ function handleAuthClick() {
     }
     document.getElementById('signout_button').style.visibility = 'visible';
     document.getElementById('authorize_button').innerText = 'Refresh';
-    await listUpcomingEvents();
+    await listUpcomingEvents(); //Funcion para listar y crear eventos
+    addEventBtn.style.display = "block";
     };
 
     if (gapi.client.getToken() === null) {
@@ -67,6 +82,7 @@ function handleAuthClick() {
     } else {
     // Skip display of account chooser and consent dialog for an existing session.
     tokenClient.requestAccessToken({prompt: ''});
+    events.innerHTML = "";
     }
 }
 function handleSignoutClick() {
@@ -74,6 +90,7 @@ function handleSignoutClick() {
     if (token !== null) {
       google.accounts.oauth2.revoke(token.access_token);
       gapi.client.setToken('');
+      events.innerHTML = " ";
       document.getElementById('content').innerText = '';
       document.getElementById('authorize_button').innerText = 'Authorize';
       document.getElementById('signout_button').style.visibility = 'hidden';
@@ -82,27 +99,21 @@ function handleSignoutClick() {
 
 async function listUpcomingEvents() {
     let response;
-    let responseEvent;
     try {
       const request = {
         'calendarId':'primary',
         'timeMin': (new Date()).toISOString(),
         'showDeleted': false,
         'singleEvents': true,
-        'maxResults': 20,
         'orderBy': 'startTime',
       };
       response = await gapi.client.calendar.events.list(request);
-      
-      console.log(gapi.client.calendar.events);
 
     } catch (err) {
       document.getElementById('content').innerText = err.message;
       return;
     }
-
     const events = response.result.items;
-    console.log(events);
     if (!events || events.length == 0) {
       document.getElementById('content').innerText = 'No events found.';
       return;
@@ -110,14 +121,13 @@ async function listUpcomingEvents() {
     cardsEvents(events)
   }
 
-// CREACION DE CARTAS
-let eventos = document.getElementById("eventos");
-
+// CREACION DE EVENTOS
 function cardsEvents(event) {
-    for (let i = 0; i < event.length; i++) {
+  for (let i = 0; i < event.length; i++) {
         
     let div = document.createElement("div");
     div.classList.add("card-event-calendar");
+    div.setAttribute("id",event[i].id);
 
     let eventStart = new Date(event[i].start.dateTime)
     let startDate = `${eventStart.toLocaleString()}`;
@@ -125,16 +135,156 @@ function cardsEvents(event) {
     let eventEnd = new Date(event[i].end.dateTime)
     let endDate = `${eventEnd.toLocaleString()}`;
 
+    let invited = '';
+    if (event[i].attendees) {
+      for (let e = 0; e < event[i].attendees.length; e++) {
+        invited = `<p>${event[i].attendees[e].email}</p>`;
+        invited += invited;
+      }
+    }
+
     div.innerHTML = `
         <h3>Title</h3>
         <p>${event[i].summary}</p>
+        <h3>Location</h3>
+        <p>${event[i].location}</p>
         <h3>Date</h3>
-        <p>Start date: ${startDate}</p>
-        <p>End date: ${endDate}</p>
+        <p class="start">Start date: </p>
+        <p class="start">${startDate}</p>
+        <p class="end">End date: </p>
+        <p class="end">${endDate}</p>
         <h3>Description</h3>
         <p>${event[i].description ? event[i].description : ""}</p>
+        <h3>Invited</h3>
+        ${invited ? invited : "<p>Alone</p>"}
     `
-    eventos.appendChild(div)
-        
+    div.appendChild(editBtn());
+    events.appendChild(div);
+  }
+  currentEvent = event;
+}
+addEventBtn.addEventListener("click",()=> {
+  formEvents.classList.add("visible");
+  createBtn.type = "submit";
+  createBtn.value = "Create";
+  formEvents.appendChild(createBtn);
+  createBtn.classList.add("submit-container");
+  editEvent.style.display = "none";
+  createBtn.style.display = "block";
+  createEvent()
+})
+//CREAR NUEVOS EVENTOS
+function createEvent() {
+  createBtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    return gapi.client.calendar.events.insert({
+      'calendarId': 'primary',
+      'summary': summary.value,
+      'location': '800 Howard St., San Francisco, CA 94103',
+      'description': description.value,
+      'start': {
+        'dateTime': new Date(start.value).toISOString(),
+        'timeZone': new Intl.DateTimeFormat().resolvedOptions().timeZone
+      },
+      'end': {
+        'dateTime': new Date(end.value).toISOString(),
+        'timeZone': new Intl.DateTimeFormat().resolvedOptions().timeZone
+      },
+      'attendees': [
+        {'email': 'lpage@example.com'},
+        {'email': 'sbrin@example.com'}
+      ],
+      'reminders': {
+        'useDefault': false,
+        'overrides': [
+          {'method': 'email', 'minutes': 24 * 60},
+          {'method': 'popup', 'minutes': 10}
+        ]
+      }
+    })
+    .then(function(response) {
+            // Handle the results here (response.result has the parsed body).
+            console.log("Response create", response);
+          },
+          function(err) { console.error("Execute error create", err); });
+  });
+}
+// EDIT BTN
+function editBtn(){
+  let editBtn = document.createElement('i');
+  editBtn.classList.add("bx");
+  editBtn.classList.add("bx-calendar-edit");
+
+  editBtn.addEventListener('click',(e) => {
+    let currentId = e.target.parentElement.id;
+    getDatasForm(currentId);
+    editEvent.type = "submit";
+    editEvent.value = "Update";
+    formEvents.appendChild(editEvent);
+    editEvent.classList.add("submit-container");
+    formEvents.classList.add("visible");
+    createBtn.style.display = "none";
+    editEvent.style.display = "block";
+  })
+  return editBtn;
+}
+closeBtn.addEventListener("click",()=>{
+  formEvents.classList.remove("visible");
+  summary.value = "";
+  description.value = "";
+  end.value = "";
+  start.value = "";
+});
+// OBTENER DATOS PARA EL FORM
+function getDatasForm(currentId) {
+  let summaryValue,descriptionValue,startValue,endValue;
+
+  for (let i = 0; i < currentEvent.length; i++) {
+    if (currentEvent[i].id === currentId) {
+      summaryValue = currentEvent[i].summary;
+      descriptionValue = currentEvent[i].description;
+      startValue = currentEvent[i].start.dateTime;
+      endValue = currentEvent[i].end.dateTime;
     }
+  }
+  summary.value = summaryValue; 
+  description.value = descriptionValue;
+  updateEvent(currentId,startValue,endValue);
+}
+
+// UPDATE DATA DESDE EL FORM
+function updateEvent(currentId,startValue,endValue) {
+  editEvent.addEventListener("click",(e)=>{
+    e.preventDefault();
+    return gapi.client.calendar.events.update({
+      "calendarId": "primary",
+      "eventId": `${currentId}`,
+      "alwaysIncludeEmail": true,
+      "sendNotifications": true,
+      "resource": {
+        "end": {
+          "dateTime": `${end.value ? new Date(end.value).toISOString() : endValue}`
+        },
+        "start": {
+          "dateTime": `${start.value ? new Date(start.value).toISOString() : startValue}`
+        },
+        "summary": `${summary.value}`,
+        "description": `${description.value}`,
+        "attendees": [
+          {"email": "soribelsantos0514@gmail.com"},
+          {"email": "soribelsantosbritos05@gmail.com"}
+        ]
+      }
+    })
+  .then(function(response) {
+          // Handle the results here (response.result has the parsed body).
+          console.log("Response update", response);
+          summary.value = "";
+          description.value = "";
+          end.value = "";
+          start.value = "";
+      },
+      function(err) { console.error("Execute error update", err);
+     });
+  })
 }

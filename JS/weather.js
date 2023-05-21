@@ -44,7 +44,7 @@ function weatherLocal() {
 function createCardCurrentTime(weather) {
     let currentDay = new Date();
     let weekday = currentDay.getDay();
-    let completeDate = `${weekDay[weekday]} ${currentDay.getDate()} • ${currentDay.getMonth()} • ${currentDay.getFullYear()}`;
+    let completeDate = `${weekDay[weekday]} ${currentDay.getDate()} • ${currentDay.getMonth()+1} • ${currentDay.getFullYear()}`;
     day.textContent = completeDate;
 
     ubication.textContent = weather.name

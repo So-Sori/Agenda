@@ -3,7 +3,6 @@ import { weatherLocal } from "./weather.js";
 let ul = document.querySelector('.task-list');
 let title = document.getElementById("title");
 let content = document.getElementById("content");
-let gretting = document.querySelector(".gretting");
 let sendBtn = document.getElementById("send-btn");
 let empty = document.getElementById("empty");
 let formTasks = document.getElementById("form-tasks");
@@ -14,18 +13,6 @@ if (tasks !== null) {
     getStorageTask();
     empty.style.display = "none";
 }
-
-// Saludo de bienvenida
-let time = new Date();
-let now = time.getHours();
-if (now < 12) {
-  gretting.textContent = `Good Morning!`;
-} else if (now < 18) {
-  gretting.textContent = `Good Afternoon!`;
-} else {
-  gretting.textContent = `Good Evening!`;
-}
-
 sendBtn.addEventListener("click",event => {
   event.preventDefault();
   let task = document.createElement
@@ -112,6 +99,7 @@ addBtn.addEventListener("click",()=>{
 });
 closeBtn.addEventListener("click",()=>{
   formTasks.classList.remove("visible");
+  formEvents.classList.remove("visible");
 });
 // MENU PAGINACION
 let home = document.querySelector(".bxs-star");
