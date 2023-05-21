@@ -408,7 +408,7 @@ img{
 .card-far-weather .weather-time{
     font-weight: bold;
 }
-#scheduler,#weather{
+#scheduler,#weather,#events-add-btn{
     display: none;
 }
 

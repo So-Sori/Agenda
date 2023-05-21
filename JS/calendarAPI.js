@@ -14,17 +14,18 @@ const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/
 const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar';
 
 let formEvents = document.getElementById("form-events");
-let sendBtn = document.getElementById("update-btn");
 let closeBtn = document.querySelector("#form-events .bxs-x-circle");
-let eventsContainer = document.getElementById("events");
+let events = document.getElementById("events");
 
 let currentEvent = '';
 let summary = document.getElementById("summary");
 let start = document.getElementById("start");
 let end = document.getElementById("end");
 let description = document.getElementById("description");
+let addEventBtn = document.getElementById("events-add-btn");
 
-
+let createBtn = document.createElement("input");
+let editEvent = document.createElement("input");
 
 //CODIGO FROM GOOGLE
 let tokenClient;
@@ -71,6 +72,7 @@ function handleAuthClick() {
     document.getElementById('signout_button').style.visibility = 'visible';
     document.getElementById('authorize_button').innerText = 'Refresh';
     await listUpcomingEvents(); //Funcion para listar y crear eventos
+    addEventBtn.style.display = "block";
     };
 
     if (gapi.client.getToken() === null) {
@@ -120,8 +122,6 @@ async function listUpcomingEvents() {
   }
 
 // CREACION DE EVENTOS
-let events = document.getElementById("events");
-
 function cardsEvents(event) {
   for (let i = 0; i < event.length; i++) {
         
@@ -146,6 +146,8 @@ function cardsEvents(event) {
     div.innerHTML = `
         <h3>Title</h3>
         <p>${event[i].summary}</p>
+        <h3>Location</h3>
+        <p>${event[i].location}</p>
         <h3>Date</h3>
         <p class="start">Start date: </p>
         <p class="start">${startDate}</p>
@@ -161,6 +163,52 @@ function cardsEvents(event) {
   }
   currentEvent = event;
 }
+addEventBtn.addEventListener("click",()=> {
+  formEvents.classList.add("visible");
+  createBtn.type = "submit";
+  createBtn.value = "Create";
+  formEvents.appendChild(createBtn);
+  createBtn.classList.add("submit-container");
+  editEvent.style.display = "none";
+  createBtn.style.display = "block";
+  createEvent()
+})
+//CREAR NUEVOS EVENTOS
+function createEvent() {
+  createBtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    return gapi.client.calendar.events.insert({
+      'calendarId': 'primary',
+      'summary': summary.value,
+      'location': '800 Howard St., San Francisco, CA 94103',
+      'description': description.value,
+      'start': {
+        'dateTime': new Date(start.value).toISOString(),
+        'timeZone': new Intl.DateTimeFormat().resolvedOptions().timeZone
+      },
+      'end': {
+        'dateTime': new Date(end.value).toISOString(),
+        'timeZone': new Intl.DateTimeFormat().resolvedOptions().timeZone
+      },
+      'attendees': [
+        {'email': 'lpage@example.com'},
+        {'email': 'sbrin@example.com'}
+      ],
+      'reminders': {
+        'useDefault': false,
+        'overrides': [
+          {'method': 'email', 'minutes': 24 * 60},
+          {'method': 'popup', 'minutes': 10}
+        ]
+      }
+    })
+    .then(function(response) {
+            // Handle the results here (response.result has the parsed body).
+            console.log("Response create", response);
+          },
+          function(err) { console.error("Execute error create", err); });
+  });
+}
 // EDIT BTN
 function editBtn(){
   let editBtn = document.createElement('i');
@@ -170,14 +218,23 @@ function editBtn(){
   editBtn.addEventListener('click',(e) => {
     let currentId = e.target.parentElement.id;
     getDatasForm(currentId);
+    editEvent.type = "submit";
+    editEvent.value = "Update";
+    formEvents.appendChild(editEvent);
+    editEvent.classList.add("submit-container");
     formEvents.classList.add("visible");
+    createBtn.style.display = "none";
+    editEvent.style.display = "block";
   })
   return editBtn;
 }
 closeBtn.addEventListener("click",()=>{
   formEvents.classList.remove("visible");
+  summary.value = "";
+  description.value = "";
+  end.value = "";
+  start.value = "";
 });
-
 // OBTENER DATOS PARA EL FORM
 function getDatasForm(currentId) {
   let summaryValue,descriptionValue,startValue,endValue;
@@ -197,7 +254,7 @@ function getDatasForm(currentId) {
 
 // UPDATE DATA DESDE EL FORM
 function updateEvent(currentId,startValue,endValue) {
-  sendBtn.addEventListener("click", (e)=>{
+  editEvent.addEventListener("click",(e)=>{
     e.preventDefault();
     return gapi.client.calendar.events.update({
       "calendarId": "primary",
@@ -214,23 +271,20 @@ function updateEvent(currentId,startValue,endValue) {
         "summary": `${summary.value}`,
         "description": `${description.value}`,
         "attendees": [
-          {
-            "email": "soribelsantos0514@gmail.com"
-          },
-          {
-            "email": "soribelsantosbritos05@gmail.com"
-          }
+          {"email": "soribelsantos0514@gmail.com"},
+          {"email": "soribelsantosbritos05@gmail.com"}
         ]
       }
     })
   .then(function(response) {
           // Handle the results here (response.result has the parsed body).
-          console.log("Response", response);
+          console.log("Response update", response);
           summary.value = "";
           description.value = "";
           end.value = "";
           start.value = "";
       },
-      function(err) { console.error("Execute error", err); });
+      function(err) { console.error("Execute error update", err);
+     });
   })
 }
