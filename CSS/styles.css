@@ -1,23 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&display=swap');
 *{
     padding:0;
     margin:0;
     box-sizing: border-box;
-    font-family: 'Segoe UI','Segoe UI Light', 'Helvetica Neue Light', 'Helvetica Neue', 'Trebuchet MS', Verdana;
+    /* font-family: 'Segoe UI','Segoe UI Light', 'Helvetica Neue Light', 'Helvetica Neue', 'Trebuchet MS', Verdana; */
+    font-family: 'Wix Madefor Display', sans-serif;
 }
 :root{
     /* CSS HEX */
---sandy-brown: #fcaf58ff;
---linen: #ffede1ff;
---light-blue: #a1e9fd;
---rosy-brown: #c4a69dff;
---almond: #eae0d5ff;
---rich-black: #0d1321ff;
---khaki: #c6ac8fff;
---ghost-white: #f4f4f4;
---walnut-brown: #5e503fff;
---pale-dogwood: #d5b9b2ff;
---black: #0a0908ff;
-
+    --light-blue-sky:#77e1ff;
+    --extra-light-blue-sky:#e8f7fc;
+    --ghost-blue-sky:#bbf0fe;
+    --light-orange:#fed9b7;
+    --light-yellow: #fff3df;
+    --khaki: #f5ebe0;
+    --salmon: #e89467;
+    --salmon-light: #e89467ab;
+    --star-yellow:#ffbf69;
+    --walnut-brown: #5e503fff;
+    --folly: #ff38639d;
 }
 body{
     margin-bottom: 20%;
@@ -35,7 +36,7 @@ section{
     width: 100%;
     height: auto;
     position: fixed;
-    z-index: 1000;
+    z-index: 999;
     bottom: 0;
 }
 .menu ul{
@@ -44,7 +45,7 @@ section{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--rosy-brown)
+    background-color: var(--khaki)
 }
 .menu ul li{
     width: 25%;
@@ -58,20 +59,19 @@ section{
 .menu .bx{
     font-size: 10vw;
     text-decoration: none;
-    color: var(--linen);
-}
-.bxs-plus-circle{
-    font-size: 4vw;
-    margin: 20px;
+    color: var(--salmon);
 }
 .bx{
     cursor: pointer;
-    color: var(--rich-black);   
+    color: var(--brown);   
+    transition: .5s;
 }
-.bx:hover{
-    transition: .2s;
-    filter: drop-shadow(1px 4px 4px var(--linen));
+.menu .bx:hover{
+    transition: .5s;
+    filter: drop-shadow(1px 4px 5px var(--salmon));
+    transform: translateY(-5px);
 }
+
 .container-task-plus{
     width: 100%;
     height: auto;
@@ -83,22 +83,22 @@ section{
     width: 70%;
     margin: 30px 10px 0;
     text-align: left;
-    font-size: 8vw;
-    font-weight: 500;
-    color: var(--rosy-brown);
+    font-size: 2.4em;
+    font-weight: 300;
+    color: var(--black);
 }
 .container-task{
     width: 100%;
     height: auto;
 }
-.container-task h3{
+.container-task .empty{
     width: 100%;
     height: auto;
 
     text-align: center;
     margin-top: 100px;
 
-    font-size: 10vw;
+    font-size: 4em;
     text-transform: uppercase;
     font-weight: bold;
     user-select: none;
@@ -110,6 +110,7 @@ section{
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 20px;
 }
 .task .text-task{
     width: 90%;
@@ -125,7 +126,9 @@ section{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    background-color: var(--almond);
+    background-color: var(--light-yellow);
+    box-shadow: 3px 4px 2px var(--walnut-brown);
+    transition: all 1.5s linear;
 }
 .container-task .task-list .task h2{
     width: 100%;
@@ -148,8 +151,8 @@ section{
     justify-content: center;
     font-size: 5vw;
     border-radius: 0 5px 5px 0;
-    color: var(--almond);
-    background-color: var(--khaki);
+    color: var(--folly);
+    background-color: var(--light-orange);
 }
 .container-task .task ul{
     height: auto;
@@ -158,10 +161,10 @@ section{
 }
 .bxs-plus-circle{
     margin: 30px 10px 0;
-    font-size: 13vw;
+    font-size: 4em;
     top: 60px;
     right: 0;
-    color: var(--sandy-brown);
+    color: var(--salmon);
 }
 .container-form-tasks,.container-form-evetns{
     width: 100%;
@@ -177,9 +180,10 @@ form{
 
     position: fixed;
     top: 0px;
+    z-index: 1000;
     transition:all .5s linear;
     transform: translateY(-600px);
-    background-color: var(--almond);
+    background-color: var(--khaki);
 
     display: flex;
     flex-wrap: wrap;
@@ -194,6 +198,7 @@ form .close-btn{
 }
 form .bxs-x-circle{
     font-size: 8vw;
+    color: var(--folly);
 }
 form label{
     width: 80%;
@@ -203,12 +208,13 @@ form label{
     margin: auto;
     font-size: x-large;
 }
-form input[type=text]{
+form input{
     width: 80%;
-    padding: 5px;
+    padding: 8px;
     margin: 5px auto;
     border-radius: 5px;
     border: none;
+    text-align: center;
 }
 .submit-container{
     width: 100%;
@@ -220,14 +226,14 @@ form input[type=text]{
 }
 form input[type=submit]{
     width: 30%;
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
     border: none;
     font-weight: 500;
     text-transform: uppercase;
     cursor: pointer;
     box-shadow: 3px 4px 2px var(--walnut-brown);
-    background-color: var(--rosy-brown);
+    background-color: var(--salmon-light);
 }
 img{
     width: 40%;
@@ -249,19 +255,20 @@ img{
 .btns-container button{
     width: 25%;
     height: auto;
-    padding: 3px;
+    padding: 5px;
     margin: 20px 10px;
     border-radius: 5px;
+    outline: none;
     border:none;
     font-weight: 500;
     cursor: pointer;
     text-transform: uppercase;
     transition: all .5s;
     box-shadow: 3px 4px 2px var(--walnut-brown);
-    background-color: var(--pale-dogwood);
+    background-color: var(--salmon-light);
 }
 .events .card-event-calendar{
-    width: 80%;
+    width: 65%;
     height: auto;
     padding: 10px;
     margin: 10px;
@@ -270,7 +277,16 @@ img{
     font-weight: 500;
     text-transform: capitalize;
     transition: all 1s linear;
-    background-color: var(--linen);
+    background-color: var(--light-yellow);
+    overflow-wrap: break-word;
+}
+.events .card-event-calendar h3,.events .card-event-calendar p{
+    padding: 2px;
+}
+.events .card-event-calendar  .bx-calendar-edit{
+    font-size: 2em;
+    margin-top: 10px;
+    color: var(--salmon);
 }
 .events .card-event-calendar ul{
     height: auto;
@@ -285,7 +301,8 @@ img{
     width: 100%;
     text-align: center;
     font-size: 8vw;
-    padding: 25px 10px 0;
+    padding: 10px;
+    font-weight: 300;
     color: var(--rich-black);
 }
 /* WEATHER: CARDS WEATHER */
@@ -314,22 +331,22 @@ img{
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin: 10px auto;
+    margin: 20px auto;
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid var(--walnut-brown);
-    box-shadow: 2px 2px 2px var(--walnut-brown);
+
 }
 .current-weather-info p{
     width: 100%;
     height: auto;
     text-align: center;
     padding: 10px 0 0 0;
+    font-size: 1.3em;
 }
 .current-weather-info h2{
     width: 100%;
     text-align: center;
     text-transform: capitalize;
+    font-size: 2em;
 }
 .container-weather-img{
     width: 50%;
@@ -337,25 +354,31 @@ img{
     display: flex;
     justify-content:center;
     align-items: center;
-    margin: 10px 0;
+    margin: 15px 0;
 }
 .container-weather-img img{
     width: 100%;
     height: auto;
-    background-color: #77e1ff;
+    background-color: var(--light-blue-sky);
     border-radius: 100%;
 }
 .current-weather-info h3,.card-far-weather h2,.card-far-weather p {
     width: 100%;
     text-align: center;
-    font-size: x-large;
-    font-weight: 700;
+    font-size: xx-large;
+    font-weight: 500;
     text-transform: capitalize;
+}
+.current-weather-info .description-weather{
+    font-size: large;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 20px;
 }
 .current-weather-info h4{
     font-size: large;
     font-weight: 400;
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
 .current-weather-info ul{
     width: 100%;
@@ -369,9 +392,14 @@ img{
     width:50%;
     margin: 10px 5px;
 }
+.current-weather-info #humd{
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    padding: 10px;
+}
 .current-weather-info li P{
-    font-size: x-large;
-    font-weight: bold;
+    font-size: 2.2em;
+    font-weight: 500;
 }
 .five-days-weather ul{
     width: 100%;
@@ -381,23 +409,22 @@ img{
     align-items: center;
 }
 .card-far-weather{
-    width: 40%;
+    width: 30%;
     height: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin: 10px auto;
+    margin: 10px;
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid var(--walnut-brown);
-    box-shadow: 2px 2px 2px var(--walnut-brown);
+    background-color: var(--extra-light-blue-sky);
 }
 .card-far-weather img{
-    width: 50%;
+    width: 80%;
     height: auto;
     margin: 5px;
-    background-color: #77e1ff;
+    background-color: var(--ghost-blue-sky);
     border-radius: 100%;
 }
 .card-far-weather p{
@@ -408,7 +435,16 @@ img{
 .card-far-weather .weather-time{
     font-weight: bold;
 }
-#scheduler,#weather,#events-add-btn{
+.add-event-btn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.add-event-btn .bxs-plus-circle{
+    display: none;
+}
+#scheduler,#weather,#events-add-btn,#signout_button{
     display: none;
 }
 
@@ -417,9 +453,8 @@ img{
         margin-bottom: 10%;
     }
     .menu .bx{
-        font-size: 5vw;
+        font-size: 3.5em;
         text-decoration: none;
-        color: var(--linen);
     }
     .container-task-plus{
         display: flex;
@@ -451,7 +486,7 @@ img{
         text-align: center;
         margin: 0;
     }
-    form input[type=text]{
+    form input{
         width: 50%;
         padding: 10px;
     }
@@ -478,10 +513,36 @@ img{
     }
     /* WEATHER */
     .current-weather-info{
-        width: 40%;
+        width: 55%;
     }
     .card-far-weather{
-        width: 25%;
+        width: 20%;
+        margin: 10px;
+    }
+}
+@media screen and (min-width:1000px){
+    .container-task .task-list .task{
+        width: 35%;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 20px;
+    }
+    .events .card-event-calendar{
+        width: 30%;
+        padding: 15px;
+    }
+    .container-weather-img img{
+        width: 70%;
+        height: auto;
+        background-color: #77e1ff;
+        border-radius: 100%;
+    }
+    .card-far-weather{
+        width: 15%;
+        margin: 10px;
+    }
+    .card-far-weather img{
+        width: 70%;
         margin: 10px;
     }
 }
@@ -490,7 +551,7 @@ img{
         transform: translateY(0);
     }
     to{
-        transform: translateY(5px);
+        transform: translateY(-5px);
     }
 }
 

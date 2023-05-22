@@ -1,12 +1,3 @@
-// DevExtreme Code Calendar
-$(function() {
-    $("#calendar").dxCalendar({ 
-        showTodayButton: true,
-        showWeekNumbers: true,
-        weekNumberRule: "firstDay"
-    });
-});
-
 const CALENDAR_ID = 'primary';
 const API_KEY = 'AIzaSyCSnNDQ8GMjmwRit7DWOQVAbvVTvnITaUY';
 const CLIENT_ID = '273520073899-hk28up4luntj9v55qhq4lo8eni2efm78.apps.googleusercontent.com';
@@ -22,18 +13,20 @@ let summary = document.getElementById("summary");
 let start = document.getElementById("start");
 let end = document.getElementById("end");
 let description = document.getElementById("description");
+let inveted = document.getElementById("inveted");
 let addEventBtn = document.getElementById("events-add-btn");
 
 let createBtn = document.createElement("input");
 let editEvent = document.createElement("input");
+let submitContainer = document.querySelector("#form-events .submit-container");
 
 //CODIGO FROM GOOGLE
 let tokenClient;
 let gapiInited = false;
 let gisInited = false;
 
-document.getElementById('authorize_button').style.visibility = 'hidden';
-document.getElementById('signout_button').style.visibility = 'hidden';
+document.getElementById('authorize_button').style.display= 'hidden';
+document.getElementById('signout_button').style.display= 'hidden';
 
 function gapiLoaded() {
     gapi.load('client', initializeGapiClient);
@@ -60,7 +53,7 @@ function gisLoaded() {
 
 function maybeEnableButtons() {
     if (gapiInited && gisInited) {
-      document.getElementById('authorize_button').style.visibility = 'visible';
+      document.getElementById('authorize_button').style.display= 'block';
     }
 }
 // Sign in the user upon button click.
@@ -69,7 +62,7 @@ function handleAuthClick() {
     if (resp.error !== undefined) {
     throw (resp);
     }
-    document.getElementById('signout_button').style.visibility = 'visible';
+    document.getElementById('signout_button').style.display= 'block';
     document.getElementById('authorize_button').innerText = 'Refresh';
     await listUpcomingEvents(); //Funcion para listar y crear eventos
     addEventBtn.style.display = "block";
@@ -93,7 +86,7 @@ function handleSignoutClick() {
       events.innerHTML = " ";
       document.getElementById('content').innerText = '';
       document.getElementById('authorize_button').innerText = 'Authorize';
-      document.getElementById('signout_button').style.visibility = 'hidden';
+      document.getElementById('signout_button').style.display= 'none';
     }
 }
 
@@ -119,6 +112,7 @@ async function listUpcomingEvents() {
       return;
     }
     cardsEvents(events)
+    console.log(events);
   }
 
 // CREACION DE EVENTOS
@@ -147,16 +141,14 @@ function cardsEvents(event) {
         <h3>Title</h3>
         <p>${event[i].summary}</p>
         <h3>Location</h3>
-        <p>${event[i].location}</p>
+        <p>${event[i].location ? event[i].location : "---"}</p>
         <h3>Date</h3>
-        <p class="start">Start date: </p>
-        <p class="start">${startDate}</p>
-        <p class="end">End date: </p>
-        <p class="end">${endDate}</p>
+        <p>Start date: ${startDate}</p>
+        <p>End date: ${endDate}</p>
         <h3>Description</h3>
-        <p>${event[i].description ? event[i].description : ""}</p>
+        <p>${event[i].description ? event[i].description : "---"}</p>
         <h3>Invited</h3>
-        ${invited ? invited : "<p>Alone</p>"}
+        ${invited ? invited : "---"}
     `
     div.appendChild(editBtn());
     events.appendChild(div);
@@ -168,7 +160,7 @@ addEventBtn.addEventListener("click",()=> {
   createBtn.type = "submit";
   createBtn.value = "Create";
   formEvents.appendChild(createBtn);
-  createBtn.classList.add("submit-container");
+  submitContainer.appendChild(createBtn);
   editEvent.style.display = "none";
   createBtn.style.display = "block";
   createEvent()
@@ -205,6 +197,7 @@ function createEvent() {
     .then(function(response) {
             // Handle the results here (response.result has the parsed body).
             console.log("Response create", response);
+            cleantForm();
           },
           function(err) { console.error("Execute error create", err); });
   });
@@ -216,12 +209,12 @@ function editBtn(){
   editBtn.classList.add("bx-calendar-edit");
 
   editBtn.addEventListener('click',(e) => {
-    let currentId = e.target.parentElement.id;
+    let currentId = e.target.parentElement.id
     getDatasForm(currentId);
     editEvent.type = "submit";
     editEvent.value = "Update";
     formEvents.appendChild(editEvent);
-    editEvent.classList.add("submit-container");
+    submitContainer.appendChild(editEvent);
     formEvents.classList.add("visible");
     createBtn.style.display = "none";
     editEvent.style.display = "block";
@@ -230,14 +223,11 @@ function editBtn(){
 }
 closeBtn.addEventListener("click",()=>{
   formEvents.classList.remove("visible");
-  summary.value = "";
-  description.value = "";
-  end.value = "";
-  start.value = "";
+  cleantForm();
 });
 // OBTENER DATOS PARA EL FORM
 function getDatasForm(currentId) {
-  let summaryValue,descriptionValue,startValue,endValue;
+  let summaryValue,descriptionValue,startValue,endValue,invetedValue;
 
   for (let i = 0; i < currentEvent.length; i++) {
     if (currentEvent[i].id === currentId) {
@@ -245,10 +235,17 @@ function getDatasForm(currentId) {
       descriptionValue = currentEvent[i].description;
       startValue = currentEvent[i].start.dateTime;
       endValue = currentEvent[i].end.dateTime;
+      if (currentEvent[i].attendees) {
+        for (let e = 0; e < currentEvent[i].attendees.length; e++) {
+          invetedValue += `${currentEvent[i].attendees[e].email},`;
+        }
+        invetedValue = (invetedValue.substring(0, invetedValue.length - 1)).substring(9);
+      }
     }
   }
   summary.value = summaryValue; 
   description.value = descriptionValue;
+  inveted.value = invetedValue;
   updateEvent(currentId,startValue,endValue);
 }
 
@@ -279,12 +276,16 @@ function updateEvent(currentId,startValue,endValue) {
   .then(function(response) {
           // Handle the results here (response.result has the parsed body).
           console.log("Response update", response);
-          summary.value = "";
-          description.value = "";
-          end.value = "";
-          start.value = "";
+          cleantForm();
       },
       function(err) { console.error("Execute error update", err);
      });
   })
+}
+function cleantForm() {
+  start.value = "";
+  end.value = "";
+  summary.value = "";
+  description.value = "";
+  inveted.value = "";
 }
