@@ -57,7 +57,7 @@ section{
     align-items: center;
 }
 .menu .bx{
-    font-size: 10vw;
+    font-size: 3em;
     text-decoration: none;
     color: var(--salmon);
 }
@@ -253,7 +253,7 @@ img{
     justify-content: center;
 }
 .btns-container button{
-    width: 25%;
+    width: 30%;
     height: auto;
     padding: 5px;
     margin: 20px 10px;
@@ -505,10 +505,10 @@ img{
         font-size: 4vw;
     }
     .btns-container button{
-        width: 10%;
+        width: 15%;
     }
     .events .card-event-calendar{
-        width: 35%;
+        width: 40%;
         padding: 15px;
     }
     /* WEATHER */

@@ -112,7 +112,6 @@ async function listUpcomingEvents() {
       return;
     }
     cardsEvents(events)
-    console.log(events);
   }
 
 // CREACION DE EVENTOS
@@ -132,8 +131,7 @@ function cardsEvents(event) {
     let invited = '';
     if (event[i].attendees) {
       for (let e = 0; e < event[i].attendees.length; e++) {
-        invited = `<p>${event[i].attendees[e].email}</p>`;
-        invited += invited;
+        invited += `<li>${event[i].attendees[e].email}</li>`;
       }
     }
 
@@ -165,8 +163,23 @@ addEventBtn.addEventListener("click",()=> {
   createBtn.style.display = "block";
   createEvent()
 })
+// GET INVETES
+function getInveted(attendees) {
+  let invetedArr = inveted.value.split(",");
+  console.log(inveted.value);
+  if (invetedArr !== "") {
+    invetedArr.forEach(element => {
+      let obj = {
+        'email': element
+      }
+      attendees.push(obj);
+    });
+  }
+  return attendees;
+}
 //CREAR NUEVOS EVENTOS
 function createEvent() {
+  let attendees = [];
   createBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     return gapi.client.calendar.events.insert({
@@ -182,10 +195,7 @@ function createEvent() {
         'dateTime': new Date(end.value).toISOString(),
         'timeZone': new Intl.DateTimeFormat().resolvedOptions().timeZone
       },
-      'attendees': [
-        {'email': 'lpage@example.com'},
-        {'email': 'sbrin@example.com'}
-      ],
+      'attendees': getInveted(attendees),
       'reminders': {
         'useDefault': false,
         'overrides': [
@@ -198,8 +208,10 @@ function createEvent() {
             // Handle the results here (response.result has the parsed body).
             console.log("Response create", response);
             cleantForm();
+            attendees = [];
+
           },
-          function(err) { console.error("Execute error create", err); });
+          function(err) {  console.log(attendees),console.error("Execute error create", err) });
   });
 }
 // EDIT BTN
@@ -248,7 +260,6 @@ function getDatasForm(currentId) {
   inveted.value = invetedValue;
   updateEvent(currentId,startValue,endValue);
 }
-
 // UPDATE DATA DESDE EL FORM
 function updateEvent(currentId,startValue,endValue) {
   editEvent.addEventListener("click",(e)=>{
