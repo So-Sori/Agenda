@@ -10,6 +10,7 @@ let events = document.getElementById("events");
 
 let currentEvent = '';
 let summary = document.getElementById("summary");
+let place = document.getElementById("location");
 let start = document.getElementById("start");
 let end = document.getElementById("end");
 let description = document.getElementById("description");
@@ -139,16 +140,17 @@ function cardsEvents(event) {
         <h3>Title</h3>
         <p>${event[i].summary}</p>
         <h3>Location</h3>
-        <p>${event[i].location ? event[i].location : "---"}</p>
+        <p>${event[i].location ? event[i].location : "<p>---</p>"}</p>
         <h3>Date</h3>
         <p>Start date: ${startDate}</p>
         <p>End date: ${endDate}</p>
         <h3>Description</h3>
-        <p>${event[i].description ? event[i].description : "---"}</p>
+        <p>${event[i].description ? event[i].description : "<p>---</p>"}</p>
         <h3>Invited</h3>
-        ${invited ? invited : "---"}
+        ${invited ? invited : "<p>---</p>"}
     `
     div.appendChild(editBtn());
+    div.appendChild(deleteBtn());
     events.appendChild(div);
   }
   currentEvent = event;
@@ -166,7 +168,6 @@ addEventBtn.addEventListener("click",()=> {
 // GET INVETES
 function getInveted(attendees) {
   let invetedArr = inveted.value.split(",");
-  console.log(inveted.value);
   if (invetedArr !== "") {
     invetedArr.forEach(element => {
       let obj = {
@@ -185,7 +186,7 @@ function createEvent() {
     return gapi.client.calendar.events.insert({
       'calendarId': 'primary',
       'summary': summary.value,
-      'location': '800 Howard St., San Francisco, CA 94103',
+      'location': place.value,
       'description': description.value,
       'start': {
         'dateTime': new Date(start.value).toISOString(),
@@ -195,7 +196,7 @@ function createEvent() {
         'dateTime': new Date(end.value).toISOString(),
         'timeZone': new Intl.DateTimeFormat().resolvedOptions().timeZone
       },
-      'attendees': getInveted(attendees),
+      'attendees': inveted.value ? getInveted(attendees) : [],
       'reminders': {
         'useDefault': false,
         'overrides': [
@@ -205,13 +206,11 @@ function createEvent() {
       }
     })
     .then(function(response) {
-            // Handle the results here (response.result has the parsed body).
-            console.log("Response create", response);
-            cleantForm();
-            attendees = [];
-
+          success("Created");
+          cleantForm();
+          attendees = [];
           },
-          function(err) {  console.log(attendees),console.error("Execute error create", err) });
+          function(err) { error(err) });
   });
 }
 // EDIT BTN
@@ -239,11 +238,12 @@ closeBtn.addEventListener("click",()=>{
 });
 // OBTENER DATOS PARA EL FORM
 function getDatasForm(currentId) {
-  let summaryValue,descriptionValue,startValue,endValue,invetedValue;
+  let summaryValue,locationValue,descriptionValue,startValue,endValue,invetedValue;
 
   for (let i = 0; i < currentEvent.length; i++) {
     if (currentEvent[i].id === currentId) {
       summaryValue = currentEvent[i].summary;
+      locationValue = currentEvent[i].location;
       descriptionValue = currentEvent[i].description;
       startValue = currentEvent[i].start.dateTime;
       endValue = currentEvent[i].end.dateTime;
@@ -258,10 +258,12 @@ function getDatasForm(currentId) {
   summary.value = summaryValue; 
   description.value = descriptionValue;
   inveted.value = invetedValue;
+  place.value = locationValue;
   updateEvent(currentId,startValue,endValue);
 }
 // UPDATE DATA DESDE EL FORM
 function updateEvent(currentId,startValue,endValue) {
+  let attendees = [];
   editEvent.addEventListener("click",(e)=>{
     e.preventDefault();
     return gapi.client.calendar.events.update({
@@ -278,25 +280,79 @@ function updateEvent(currentId,startValue,endValue) {
         },
         "summary": `${summary.value}`,
         "description": `${description.value}`,
-        "attendees": [
-          {"email": "soribelsantos0514@gmail.com"},
-          {"email": "soribelsantosbritos05@gmail.com"}
-        ]
+        "attendees": inveted.value ? getInveted(attendees) : [],
+        'location':`${place.value}`,
+        'reminders': {
+          'useDefault': false,
+          'overrides': [
+            {'method': 'email', 'minutes': 24 * 60},
+            {'method': 'popup', 'minutes': 10}
+          ]
+        }
       }
     })
   .then(function(response) {
-          // Handle the results here (response.result has the parsed body).
-          console.log("Response update", response);
+          success("Updated");
           cleantForm();
+          attendees = [];
       },
-      function(err) { console.error("Execute error update", err);
+      function(err) { error(err);
      });
   })
+}
+// DELETE BTN
+function deleteBtn(){
+  let deleteBtn = document.createElement('i');
+  deleteBtn.classList.add("bx");
+  deleteBtn.classList.add("bx-x");
+
+  deleteBtn.addEventListener('click',(e) => {
+    let currentId = e.target.parentElement.id
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteEvents(currentId);
+      }
+    })
+  })
+  return deleteBtn;
+}
+function deleteEvents(currentId) {
+  return gapi.client.calendar.events.delete({
+    "calendarId": "primary",
+    "eventId": `${currentId}`
+  })
+      .then(function(response) {
+        success("Deleted");
+        },
+        function(err) { error(err) });
 }
 function cleantForm() {
   start.value = "";
   end.value = "";
   summary.value = "";
+  place.value = "";
   description.value = "";
   inveted.value = "";
+}
+function success(verb) {
+  Swal.fire(
+    `${verb}!`,
+    'Please refresh the page',
+    'success'
+  )
+}
+function error(info) {
+  Swal.fire(
+    `Oh oh!`,
+    `${info.result.error.message}\nPlease try again`,
+    'error'
+  )
 }

@@ -33,9 +33,9 @@
             <form id="form-tasks">
                 <div class="close-btn"><i class='bx bxs-x-circle'></i></div>
                 <label>Title</label>
-                <input type="text" name="title" id="title">
+                <input type="text" id="title">
                 <label>Content</label>
-                <input type="text" name="content" id="content">
+                <input type="text" id="content">
                 <div class="submit-container">
                     <input type="submit" value="new task" id="send-btn">
                 </div>
@@ -56,15 +56,17 @@
             <form id="form-events">
                 <div class="close-btn"><i class='bx bxs-x-circle'></i></div>
                <label>Title</label>
-               <input type="text" name="summary" id="summary">
+               <input type="text" id="summary">
+               <label>Location</label>
+               <input type="text" id="location">
                <label>Start</label>
-               <input type="datetime-local" name="start" id="start">
+               <input type="datetime-local" id="start">
                <label>End</label>
-               <input type="datetime-local" name="end" id="end">
+               <input type="datetime-local" id="end">
                <label>Description</label>
-               <input type="text" name="description" id="description">
+               <input type="text" id="description">
                <label>Inveted</label>
-               <input type="text" name="inveted" id="inveted" placeholder="example@email.com,example@email.com">
+               <input type="text" id="inveted" placeholder="example@email.com,example@email.com">
                <div class="submit-container">
                </div>
             </form>
@@ -111,5 +113,7 @@
 
     <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>
     <script async defer src="https://accounts.google.com/gsi/client" onload="gisLoaded()"></script>
+    <!-- Libreria para Alertas -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
