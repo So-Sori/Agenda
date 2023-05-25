@@ -1,7 +1,8 @@
-let day= document.getElementById("week-day");
-let ubication= document.getElementById("ubication");
-let weatherImg= document.getElementById("weather-img");
-let weatherTime= document.getElementById("weather-time");
+let day = document.getElementById("week-day");
+let ubication = document.getElementById("ubication");
+let weatherImg = document.getElementById("weather-img");
+let weatherTime = document.getElementById("weather-time");
+let weatherTimeDescription = document.getElementById("weather-time-description");
 let temp= document.getElementById("temp");
 let humd= document.getElementById("humd");
 let wind= document.getElementById("wind");
@@ -14,6 +15,15 @@ let weekDay = {
     4:'Thursday',
     5:'Friday',
     6:'Saturday'
+}
+let weekDayShort = {
+    0:'Sun',
+    1:'Mon',
+    2:'Tue',
+    3:'Wed',
+    4:'Thu',
+    5:'Fri',
+    6:'Sat'
 }
 
 const API_KEY = '0c0aa0cf08565fbbc8a4718514cd7b0d';
@@ -52,10 +62,11 @@ function createCardCurrentTime(weather) {
     weatherImg.src = `https://openweathermap.org/img/wn/${weather.weather[0].icon}@4x.png`;
 
     weatherTime.textContent = weather.weather[0].main;
+    weatherTimeDescription.textContent = weather.weather[0].description;
 
     temp.innerHTML = `<h4>Temp</h4><p>${Math.round(weather.main.temp)}°C</p>`;
     humd.innerHTML = `<h4>Humd</h4><p>${weather.main.humidity}%</p>`;
-    wind.innerHTML = `<h4>Wind</h4><p>${Math.round(weather.wind.speed)}M/S</p>`;
+    wind.innerHTML = `<h4>Pre</h4><p>${weather.main.pressure}hPa</p>`;
 }
 function createFiveDaysWeather(weather) {
     let lis = document.querySelectorAll(".card-far-weather");
@@ -66,7 +77,7 @@ function createFiveDaysWeather(weather) {
         let weekday = date.getDay();
         
         lis[count].innerHTML = `
-            <h2>${weekDay[weekday]}</h2>
+            <h2>${weekDayShort[weekday]}</h2>
             <p>${Math.round(weather.list[i].main.temp)}°C</p>
             <img src="https://openweathermap.org/img/wn/${weather.list[i].weather[0].icon}@4x.png" alt="weather ${weather.list[i].weather[0].main}">
             <p class="weather-time">${weather.list[i].weather[0].main}</p>
