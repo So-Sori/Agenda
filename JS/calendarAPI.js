@@ -163,7 +163,7 @@ addEventBtn.addEventListener("click",()=> {
   submitContainer.appendChild(createBtn);
   editEvent.style.display = "none";
   createBtn.style.display = "block";
-  createEvent()
+  createEvent();
 })
 // GET INVETES
 function getInveted(attendees) {
@@ -183,6 +183,7 @@ function createEvent() {
   let attendees = [];
   createBtn.addEventListener("click",(e)=>{
     e.preventDefault();
+    e.stopImmediatePropagation();
     return gapi.client.calendar.events.insert({
       'calendarId': 'primary',
       'summary': summary.value,
@@ -209,6 +210,7 @@ function createEvent() {
           success("Created");
           cleantForm();
           attendees = [];
+          console.log(response);
           },
           function(err) { error(err) });
   });
@@ -266,6 +268,7 @@ function updateEvent(currentId,startValue,endValue) {
   let attendees = [];
   editEvent.addEventListener("click",(e)=>{
     e.preventDefault();
+    e.stopImmediatePropagation();
     return gapi.client.calendar.events.update({
       "calendarId": "primary",
       "eventId": `${currentId}`,
@@ -294,7 +297,9 @@ function updateEvent(currentId,startValue,endValue) {
   .then(function(response) {
           success("Updated");
           cleantForm();
+          formEvents.classList.remove("visible");
           attendees = [];
+          console.log(response);
       },
       function(err) { error(err);
      });
