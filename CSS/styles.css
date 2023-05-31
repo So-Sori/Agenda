@@ -91,7 +91,7 @@ section{
     width: 100%;
     height: auto;
 }
-.container-task .empty{
+.empty{
     width: 100%;
     height: auto;
 
@@ -166,7 +166,7 @@ section{
     right: 0;
     color: var(--salmon);
 }
-.container-form-tasks,.container-form-evetns{
+.container-form-tasks,.container-form-events{
     width: 100%;
     height: auto;
     display: flex;
@@ -197,7 +197,7 @@ form .close-btn{
     width: 100%;
 }
 form .bxs-x-circle{
-    font-size: 8vw;
+    font-size: 2.5em;
     color: var(--folly);
 }
 form label{
@@ -208,6 +208,9 @@ form label{
     margin: auto;
     text-align: center;
     font-size: 1.3em;
+}
+form label span{
+    color: var(--folly);
 }
 form input{
     width: 80%;
@@ -377,7 +380,7 @@ img{
 .current-weather-info h3,.card-far-weather h2,.card-far-weather p {
     width: 100%;
     text-align: center;
-    font-size: xx-large;
+    font-size: 2em;
     font-weight: 500;
     text-transform: capitalize;
 }
@@ -478,7 +481,7 @@ img{
         font-size: 5vw;
     }
     .bxs-plus-circle{
-        font-size: 6vw;
+        font-size: 4em;
         margin: 20px 0;
     }
     .container-task h3{
@@ -488,11 +491,15 @@ img{
     .container-task .task-list .task{
         width: 60%;
     }
+    .container-form-tasks{
+        justify-content: center;
+        align-items: center;
+    }
     form .bxs-x-circle{
-        font-size: 4vw;
+        font-size: 3em;
         margin: 0 50px;
     }
-    form label{
+    .container-form-events label{
         width: 30%;
         text-align: right;
         margin: 0;
@@ -559,6 +566,12 @@ img{
     .card-far-weather img{
         width: 70%;
         margin: 10px;
+    }
+    form .bxs-x-circle{
+        font-size: 3em;
+    }
+    .btns-container button{
+        width: 10%;
     }
 }
 @keyframes alert{

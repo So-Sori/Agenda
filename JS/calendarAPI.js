@@ -9,6 +9,7 @@ let closeBtn = document.querySelector("#form-events .bxs-x-circle");
 let events = document.getElementById("events");
 
 let currentEvent = '';
+let emptyEventsList = document.getElementById("empty-event");
 let summary = document.getElementById("summary");
 let place = document.getElementById("location");
 let start = document.getElementById("start");
@@ -67,27 +68,30 @@ function handleAuthClick() {
     document.getElementById('authorize_button').innerText = 'Refresh';
     await listUpcomingEvents(); //Funcion para listar y crear eventos
     addEventBtn.style.display = "block";
-    };
-
-    if (gapi.client.getToken() === null) {
+    emptyEventsList.style.display = "none";
+  };
+  
+  if (gapi.client.getToken() === null) {
     // Prompt the user to select a Google Account and ask for consent to share their data
     // when establishing a new session.
     tokenClient.requestAccessToken({prompt: 'consent'});
-    } else {
+  } else {
     // Skip display of account chooser and consent dialog for an existing session.
     tokenClient.requestAccessToken({prompt: ''});
     events.innerHTML = "";
-    }
+  }
 }
 function handleSignoutClick() {
-    const token = gapi.client.getToken();
-    if (token !== null) {
+  const token = gapi.client.getToken();
+  if (token !== null) {
       google.accounts.oauth2.revoke(token.access_token);
       gapi.client.setToken('');
       events.innerHTML = " ";
       document.getElementById('content').innerText = '';
       document.getElementById('authorize_button').innerText = 'Authorize';
       document.getElementById('signout_button').style.display= 'none';
+      addEventBtn.style.display = "none";
+      emptyEventsList.style.display = "block";
     }
 }
 
@@ -163,7 +167,7 @@ addEventBtn.addEventListener("click",()=> {
   submitContainer.appendChild(createBtn);
   editEvent.style.display = "none";
   createBtn.style.display = "block";
-  createEvent()
+  createEvent();
 })
 // GET INVETES
 function getInveted(attendees) {
@@ -183,6 +187,7 @@ function createEvent() {
   let attendees = [];
   createBtn.addEventListener("click",(e)=>{
     e.preventDefault();
+    e.stopImmediatePropagation();
     return gapi.client.calendar.events.insert({
       'calendarId': 'primary',
       'summary': summary.value,
@@ -266,6 +271,7 @@ function updateEvent(currentId,startValue,endValue) {
   let attendees = [];
   editEvent.addEventListener("click",(e)=>{
     e.preventDefault();
+    e.stopImmediatePropagation();
     return gapi.client.calendar.events.update({
       "calendarId": "primary",
       "eventId": `${currentId}`,
@@ -294,6 +300,7 @@ function updateEvent(currentId,startValue,endValue) {
   .then(function(response) {
           success("Updated");
           cleantForm();
+          formEvents.classList.remove("visible");
           attendees = [];
       },
       function(err) { error(err);
