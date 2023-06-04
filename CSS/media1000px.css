@@ -1,0 +1,32 @@
+@media screen and (min-width:1000px){
+    .container-task .task-list .task{
+        width: 35%;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 20px;
+    }
+    .events .card-event-calendar{
+        width: 30%;
+        padding: 15px;
+    }
+    .container-weather-img img{
+        width: 70%;
+        height: auto;
+        background-color: #77e1ff;
+        border-radius: 100%;
+    }
+    .card-far-weather{
+        width: 15%;
+        margin: 10px;
+    }
+    .card-far-weather img{
+        width: 70%;
+        margin: 10px;
+    }
+    form .bxs-x-circle{
+        font-size: 3em;
+    }
+    .btns-container button{
+        width: 10%;
+    }
+}

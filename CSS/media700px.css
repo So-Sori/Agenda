@@ -1,0 +1,79 @@
+@media screen and (min-width:700px) {
+    body{
+        margin-bottom: 10%;
+    }
+    .menu .bx{
+        font-size: 3.5em;
+        text-decoration: none;
+    }
+    .container-task-plus{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .container-task-plus h1{
+        margin: 15px;
+        font-size: 5vw;
+    }
+    .bxs-plus-circle{
+        font-size: 4em;
+        margin: 20px 0;
+    }
+    .container-task h3{
+        margin-top: 30px;
+        font-size: 5vw;
+    }
+    .container-task .task-list .task{
+        width: 60%;
+    }
+    .container-form-tasks{
+        justify-content: center;
+        align-items: center;
+    }
+    form .bxs-x-circle{
+        font-size: 3em;
+        margin: 0 50px;
+    }
+    .container-form-events label{
+        width: 30%;
+        text-align: right;
+        margin: 0 auto;
+    }
+    form input{
+        width: 60%;
+        padding: 10px;
+        margin: 5px auto;
+    }
+    form input[type=submit]{
+        width: 15%;
+        margin: 5px auto;
+    }
+    .container-task .task-list .task .bxs-trash-alt{
+        font-size: 3vw;
+    }
+    #form-events{
+        display: flex;
+    }
+    /*CALENDAR*/
+    #calendar{
+        width: 60%;
+    }
+    .schedule-title{
+        font-size: 4vw;
+    }
+    .btns-container button{
+        width: 15%;
+    }
+    .events .card-event-calendar{
+        width: 40%;
+        padding: 15px;
+    }
+    /* WEATHER */
+    .current-weather-info{
+        width: 55%;
+    }
+    .card-far-weather{
+        width: 20%;
+        margin: 10px;
+    }
+}
