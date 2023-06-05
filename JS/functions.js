@@ -4,6 +4,9 @@ export let formEvents = document.getElementById("form-events");
 let events = document.getElementById("events");
 
 let currentEvent = '';
+let currentEventId = '';
+let tartDateUpdate = "";
+let endDateUpdate = "";
 export let summary = document.getElementById("summary");
 export let place = document.getElementById("location");
 export let start = document.getElementById("start");
@@ -100,6 +103,7 @@ export function createEvent() {
           success("Created");
           cleantForm();
           attendees = [];
+          console.log("SOY CREATE");
           },
           function(err) { error(err) });
   });
@@ -147,14 +151,18 @@ export function getDatasForm(currentId) {
   description.value = descriptionValue;
   inveted.value = invetedValue;
   place.value = locationValue;
-  updateEvent(currentId,startValue,endValue);
+  currentEventId = currentId;
+  tartDateUpdate = startValue;
+  endDateUpdate = endValue;
+  updateEvent();
 }
 // UPDATE DATA DESDE EL FORM
-export function updateEvent(currentId,startValue,endValue) {
+export function updateEvent() {
   let attendees = [];
   editEvent.addEventListener("click",(e)=>{
-    e.preventDefault();
     e.stopImmediatePropagation();
+    e.preventDefault();
+    let currentId = currentEventId;
     return gapi.client.calendar.events.update({
       "calendarId": "primary",
       "eventId": `${currentId}`,
@@ -162,10 +170,10 @@ export function updateEvent(currentId,startValue,endValue) {
       "sendNotifications": true,
       "resource": {
         "end": {
-          "dateTime": `${end.value ? new Date(end.value).toISOString() : endValue}`
+          "dateTime": `${end.value ? new Date(end.value).toISOString() : endDateUpdate}`
         },
         "start": {
-          "dateTime": `${start.value ? new Date(start.value).toISOString() : startValue}`
+          "dateTime": `${start.value ? new Date(start.value).toISOString() : tartDateUpdate}`
         },
         "summary": `${summary.value}`,
         "description": `${description.value}`,
@@ -188,10 +196,10 @@ export function updateEvent(currentId,startValue,endValue) {
       },
       function(err) { 
         error(err);
-        console.log(err);
      });
   })
 }
+
 // DELETE BTN
 export function deleteBtn(){
   let deleteBtn = document.createElement('i');
