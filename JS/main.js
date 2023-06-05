@@ -1,5 +1,6 @@
 import { weatherLocal } from "./weather.js";
-import { succesTask } from "./alertas.js";
+import { succesTask, errorTask } from "./cleanform-alertas.js";
+import { formEvents } from "./functions.js"
 
 let ul = document.querySelector('.task-list');
 let title = document.getElementById("title");
@@ -35,6 +36,8 @@ function createTask() {
     setListTask();
     empty.style.display = 'none';
     succesTask();
+  }else{
+    errorTask();
   }
 }
 function deleteBtn(){
