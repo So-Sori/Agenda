@@ -37,6 +37,24 @@ function succesTask() {
     title: 'New Task Created!'
   })
 }
+function weatherAlert() {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 1000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+  Toast.fire({
+    icon: 'info',
+    title: 'Activate your location'
+  })
+}
 function errorTask() {
   const Toast = Swal.mixin({
     toast: true,
@@ -56,4 +74,4 @@ function errorTask() {
   })
 }
 
-export {cleantForm,success,error,succesTask,errorTask}
+export {cleantForm,success,error,succesTask,errorTask,weatherAlert}
