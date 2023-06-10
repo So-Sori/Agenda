@@ -27,6 +27,10 @@ let weekDayShort = {
 }
 
 const API_KEY = '0c0aa0cf08565fbbc8a4718514cd7b0d';
+let currentWeatherInfo = document.querySelector(".current-weather-info");
+let fiveDaysWeather = document.querySelector(".five-days-weather");
+let emptyWeather = document.getElementById("empty-weather");
+
 function fetchData(position){
     let {latitude,longitude} = position.coords
     fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`)
@@ -45,12 +49,6 @@ function fetchDataFiveDays(position){
     })
     .catch(error => error);
 }
-
-function weatherLocal() {
-    navigator.geolocation.getCurrentPosition(fetchData);
-    navigator.geolocation.getCurrentPosition(fetchDataFiveDays);
-}
-
 function createCardCurrentTime(weather) {
     let currentDay = new Date();
     let weekday = currentDay.getDay();
@@ -85,5 +83,33 @@ function createFiveDaysWeather(weather) {
         count++;
     }
 }
+export function funcionInit() {
+	if (!"geolocation" in navigator) {
+		return emptyWeather.innerHTML = "Your browser does not support location access. try another";
+	}
 
-export {weatherLocal}
+	const onUbicacionConcedida = () => {
+        weatherLocal();
+        currentWeatherInfo.style.display =  "block";
+        fiveDaysWeather.style.display =  "block";
+        emptyWeather.style.display =  "none";
+	}
+  
+	const onErrorDeUbicacion = err => {
+        emptyWeather.innerHTML = err.message;
+        currentWeatherInfo.style.display =  "none";
+        fiveDaysWeather.style.display =  "none";
+	}
+
+	const opcionesDeSolicitud = {
+		enableHighAccuracy: true, // Alta precisión
+        maximumAge: 0 // No queremos caché
+	};
+	// Solicitar
+	navigator.geolocation.getCurrentPosition(onUbicacionConcedida, onErrorDeUbicacion, opcionesDeSolicitud);
+
+};
+function weatherLocal() {
+    navigator.geolocation.getCurrentPosition(fetchData);
+    navigator.geolocation.getCurrentPosition(fetchDataFiveDays);
+}

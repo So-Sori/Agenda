@@ -1,5 +1,5 @@
-import { weatherLocal } from "./weather.js";
-import { succesTask, errorTask } from "./cleanform-alertas.js";
+import { funcionInit } from "./weather.js";
+import { succesTask, errorTask,weatherAlert} from "./cleanform-alertas.js";
 import { formEvents } from "./functions.js"
 
 let ul = document.querySelector('.task-list');
@@ -149,9 +149,10 @@ weather.addEventListener("click",()=>{
   sectionSchedule.style.display = "none";
   sectionTask.style.display = "none";
   sectionWeather.style.display = "block";
-
-  weatherLocal()
+  funcionInit();
 })
+// document.addEventListener("DOMContentLoaded", funcionInit);
+
 function removeDuplicates(arr1,arr2,newList){
   newList = arr1.concat(arr2)
   for(var i=0; i< newList.length; ++i) {
