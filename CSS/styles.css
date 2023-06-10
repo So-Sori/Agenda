@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&display=swap');
+@import url(generalStyles.css) all;
+@import url(menu-task.css) all;
+@import url(schedule.css) all;
+@import url(weather.css) all;
+@import url(media700px.css) all;
+@import url(media1000px.css) all;
+@import url(animation.css) all;
+
+*{
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+    font-family: 'Wix Madefor Display', sans-serif;
+}
+:root{
+    /* CSS HEX */
+    --light-blue-sky:#77e1ff;
+    --extra-light-blue-sky:#e8f7fc;
+    --ghost-blue-sky:#bbf0fe;
+    --light-orange:#fed9b7;
+    --light-yellow: #fff3df;
+    --khaki: #f5ebe0;
+    --salmon: #e89467;
+    --salmon-light: #e89467ab;
+    --star-yellow:#ffbf69;
+    --walnut-brown: #5e503fff;
+    --folly: #ff38639d;
+}
+body{
+    margin-bottom: 20%;
+}
