@@ -5,7 +5,7 @@ const CALENDAR_ID = 'primary';
 const API_KEY = 'AIzaSyCSnNDQ8GMjmwRit7DWOQVAbvVTvnITaUY';
 const CLIENT_ID = '273520073899-hk28up4luntj9v55qhq4lo8eni2efm78.apps.googleusercontent.com';
 const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
-const SCOPES = 'https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/calendar';
+const SCOPES = 'https://www.googleapis.com/auth/calendar';
 
 let closeBtn = document.querySelector("#form-events .bxs-x-circle");
 let emptyEventsList = document.getElementById("empty-event");
@@ -94,7 +94,7 @@ function handleSignoutClick() {
       gapi.client.setToken('');
       events.innerHTML = " ";
       document.getElementById('content').innerText = '';
-      document.getElementById('authorize_button').innerText = 'Authorize';
+      document.getElementById('authorize_button').innerText = 'Login';
       document.getElementById('signout_button').style.display= 'none';
       addEventBtn.style.display = "none";
       emptyEventsList.style.display = "block";
