@@ -47,32 +47,44 @@ function deleteBtn(){
 
     iconTrash.addEventListener('click',(e) => {
         const item = e.target.parentElement;
-        ul.removeChild(item);
-
-        let tasks = JSON.parse(localStorage.getItem("listTask"));
-        let taskTitle = item.children[0].childNodes[1].innerHTML
-        
-        // Eliminar elementos del storage
-        for (let i = 0; i < tasks.length; i++) {
-          if (taskTitle === tasks[i].title) {
-              tasks.splice(i,1);
-              localStorage.setItem("listTask",JSON.stringify(tasks));
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+              ul.removeChild(item);
+      
+              let tasks = JSON.parse(localStorage.getItem("listTask"));
+              let taskTitle = item.children[0].childNodes[1].innerHTML
+              
+              // Eliminar elementos del storage
+              for (let i = 0; i < tasks.length; i++) {
+                if (taskTitle === tasks[i].title) {
+                    tasks.splice(i,1);
+                    localStorage.setItem("listTask",JSON.stringify(tasks));
+                  }
+              }
+              // Eliminar elementos del array principal
+              for (let e = 0; e < listTask.length; e++) {
+                if (listTask[e].title === taskTitle) {
+                  listTask.splice(e,1);
+                } 
+              }
+      
+              const items = ul.childElementCount;
+              if(items === 0){
+                empty.style.display = 'block';
+                localStorage.clear();
+                listTask = [];
+                tasks = [];
             }
-        }
-        // Eliminar elementos del array principal
-        for (let e = 0; e < listTask.length; e++) {
-          if (listTask[e].title === taskTitle) {
-            listTask.splice(e,1);
-          } 
-        }
-
-        const items = ul.childElementCount;
-        if(items === 0){
-          empty.style.display = 'block';
-          localStorage.clear();
-          listTask = [];
-          tasks = [];
-      }
+          }
+        })
     })
     return iconTrash;
 }
@@ -149,9 +161,9 @@ weather.addEventListener("click",()=>{
   sectionSchedule.style.display = "none";
   sectionTask.style.display = "none";
   sectionWeather.style.display = "block";
+  weatherAlert();
   funcionInit();
 })
-// document.addEventListener("DOMContentLoaded", funcionInit);
 
 function removeDuplicates(arr1,arr2,newList){
   newList = arr1.concat(arr2)

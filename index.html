@@ -16,14 +16,15 @@
 <body>
     <nav class="menu">
         <ul>
-            <li><i class='bx bxs-star'></i></li>
-            <li><i class='bx bxs-calendar'></i></li>
-            <li><i class='bx bxs-sun' ></i></li>
+            <li><i class='bx bxs-star' title="To-Do list"></i></li>
+            <li><i class='bx bxs-calendar' title="Calendar"></i></li>
+            <li><i class='bx bxs-sun' title="Weather"></i></li>
+            <li><a href="https://privacy-policy-hazel.vercel.app/" target="_blank"><i class='bx bxs-info-circle' title="Privacy Policy"></i></a></li>
         </ul>
     </nav>
     <section id="task">
         <div class="container-task-plus">
-            <h1>Tasks</h1><i class='bx bxs-plus-circle'></i>
+            <h1>Tasks</h1><i class='bx bxs-plus-circle' title="Add task"></i>
         </div>
         <div class="container-task">
             <h3 id="empty" class="empty">Empty tasks list</h3>
@@ -47,7 +48,7 @@
     <section id="scheduler">
         <h3 class="schedule-title">Events</h3>
         <div class="btns-container">
-            <button id="authorize_button">Authorize</button>
+            <button id="authorize_button">Login</button>
             <button id="signout_button">Sign Out</button>
         
             <pre id="content" style="white-space: pre-wrap;"></pre>
@@ -65,14 +66,14 @@
                 <input type="datetime-local" id="end">
                 <label>Description</label>
                 <input type="text" id="description">
-                <label>Inveted</label>
+                <label>Invited</label>
                 <input type="text" id="inveted" placeholder="example@email.com,example@email.com">
                 <div class="submit-container">
                 </div>
             </form>
         </div>
         <div class="add-event-btn">
-            <i class='bx bxs-plus-circle' id="events-add-btn"></i>
+            <i class='bx bxs-plus-circle' id="events-add-btn" title="Add event"></i>
         </div>
         <div class="events" id="events">
         </div>

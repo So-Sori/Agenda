@@ -103,7 +103,6 @@ export function createEvent() {
           success("Created");
           cleantForm();
           attendees = [];
-          console.log("SOY CREATE");
           },
           function(err) { error(err) });
   });
