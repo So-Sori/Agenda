@@ -60,7 +60,7 @@ signout_button.addEventListener('click',(e) =>{
 })
 function maybeEnableButtons() {
     if (gapiInited && gisInited) {
-      authorize_button.style.display= 'block';
+      authorize_button.style.visibility= 'visible';
     }
 }
 // Sign in the user upon button click.
@@ -94,7 +94,8 @@ function handleSignoutClick() {
       gapi.client.setToken('');
       events.innerHTML = " ";
       document.getElementById('content').innerText = '';
-      document.getElementById('authorize_button').innerText = 'Login';
+      document.getElementById('authorize_button').innerHTML = `<img src="IMG/google.png" alt="google logo">
+      <p>Login with Google</p>`;
       document.getElementById('signout_button').style.display= 'none';
       addEventBtn.style.display = "none";
       emptyEventsList.style.display = "block";
