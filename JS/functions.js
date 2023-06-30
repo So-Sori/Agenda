@@ -112,6 +112,7 @@ export function editBtn(){
   let editBtn = document.createElement('i');
   editBtn.classList.add("bx");
   editBtn.classList.add("bx-calendar-edit");
+  editBtn.title  = "Edit event";
 
   editBtn.addEventListener('click',(e) => {
     let currentId = e.target.parentElement.id
@@ -204,6 +205,7 @@ export function deleteBtn(){
   let deleteBtn = document.createElement('i');
   deleteBtn.classList.add("bx");
   deleteBtn.classList.add("bx-x");
+  deleteBtn.title  = "Delete event";
 
   deleteBtn.addEventListener('click',(e) => {
     let currentId = e.target.parentElement.id

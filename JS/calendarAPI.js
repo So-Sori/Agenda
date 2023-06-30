@@ -74,6 +74,11 @@ function handleAuthClick() {
     await listUpcomingEvents(); //Funcion para listar y crear eventos
     addEventBtn.style.display = "block";
     emptyEventsList.style.display = "none";
+    // RE-ESTABLECIENDO AL DISEÑO ORIGINAL
+    signout_button.style.background = "#fed9b7";
+    authorize_button.style.background = "#fed9b7";
+    signout_button.style.fontFamily = "Wix Madefor Display";
+    authorize_button.style.fontFamily = "Wix Madefor Display";
   };
   
   if (gapi.client.getToken() === null) {
