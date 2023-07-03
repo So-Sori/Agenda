@@ -15,17 +15,30 @@
 .btns-container button{
     width: 30%;
     height: auto;
+
     padding: 5px;
     margin: 20px 10px;
     border-radius: 5px;
+
     outline: none;
     border:none;
-    font-weight: 500;
     cursor: pointer;
-    text-transform: uppercase;
     transition: all .5s;
+
+    font-weight: 500;
+    text-align: center;
     box-shadow: 3px 4px 2px var(--walnut-brown);
-    background-color: var(--salmon-light);
+    background-color: var(--light-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btns-container button img{
+    width: 20%;
+    margin: auto;
+}
+.btns-container button p{
+    color: rgb(0, 128, 255);
 }
 .events .card-event-calendar{
     width: 70%;

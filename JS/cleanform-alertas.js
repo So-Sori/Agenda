@@ -72,6 +72,6 @@ export function weatherAlert() {
   
   Toast.fire({
     icon: 'info',
-    title: 'Activate your location'
+    title: 'Activate your browser location'
   })
 }
