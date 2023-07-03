@@ -26,11 +26,11 @@
 .menu .bx{
     font-size: 2.5em;
     text-decoration: none;
-    color: var(--salmon);
+    color: var(--dark-purple);
 }
 .menu .bx:hover{
     transition: .5s;
-    filter: drop-shadow(1px 4px 15px var(--salmon));
+    filter: drop-shadow(1px 4px 15px var(--dark-purple));
     transform: translateY(-5px);
 }
 
@@ -75,7 +75,7 @@
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    background-color: var(--light-yellow);
+    background-color: var(--light-white-purple);
     box-shadow: 3px 4px 2px var(--walnut-brown);
     transition: all 1.5s linear;
 }
@@ -101,7 +101,7 @@
     font-size: 2em;
     border-radius: 0 5px 5px 0;
     color: var(--folly);
-    background-color: var(--light-orange);
+    background-color: var(--light-purple);
 }
 .container-task .task ul{
     height: auto;
@@ -113,7 +113,7 @@
     font-size: 4em;
     top: 60px;
     right: 0;
-    color: var(--salmon);
+    color: var(--dark-purple);
 }
 .container-form-tasks,.container-form-events{
     width: 100%;
