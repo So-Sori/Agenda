@@ -12,7 +12,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--khaki)
+    background-color: var(--purple-white);
 }
 .menu ul li{
     width: 25%;

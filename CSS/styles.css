@@ -3,6 +3,7 @@
 @import url(menu-task.css) all;
 @import url(schedule.css) all;
 @import url(weather.css) all;
+@import url(media300px.css) all;
 @import url(media700px.css) all;
 @import url(media1000px.css) all;
 @import url(animation.css) all;
@@ -20,7 +21,7 @@
     --ghost-blue-sky:#bbf0fe;
     --light-purple:#d8b7fe;
     --light-white-purple: #f6efff;
-    --khaki: #E9E4F0;
+    --purple-white: #E9E4F0;
     --dark-purple: #897089;
     --salmon-light: #e89467ab;
     --star-yellow:#ffbf69;
