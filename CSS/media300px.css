@@ -1,0 +1,11 @@
+@media screen and (max-width:370px) {
+    form input[type=submit]{
+        width: 70%;
+    }
+    .btns-container button{
+        width: 50%;
+    }
+    .btns-container button img{
+        width: 20%;
+    }
+}
