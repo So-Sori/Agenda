@@ -54,7 +54,7 @@
     #form-events{
         display: flex;
     }
-    /*CALENDAR*/
+
     #calendar{
         width: 60%;
     }
@@ -68,7 +68,7 @@
         width: 40%;
         padding: 15px;
     }
-    /* WEATHER */
+
     .current-weather-info{
         width: 55%;
     }

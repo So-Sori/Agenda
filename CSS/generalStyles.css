@@ -2,7 +2,6 @@ section{
     width: 100%;
     height: auto;
 }
-/* ESTILOS GENERALES*/
     h1,.schedule-title, .weather-design h3{
         letter-spacing: 3px;
     }
@@ -34,7 +33,7 @@ form,.container-form{
     z-index: 1000;
     transition:all .5s linear;
     transform: translateY(-700px);
-    background-color: var(--khaki);
+    background-color: var(--purple-white);
 
     display: flex;
     flex-wrap: wrap;

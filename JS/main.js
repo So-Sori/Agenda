@@ -62,14 +62,14 @@ function deleteBtn(){
               let tasks = JSON.parse(localStorage.getItem("listTask"));
               let taskTitle = item.children[0].childNodes[1].innerHTML
               
-              // Eliminar elementos del storage
+              // Delete elements from storage
               for (let i = 0; i < tasks.length; i++) {
                 if (taskTitle === tasks[i].title) {
                     tasks.splice(i,1);
                     localStorage.setItem("listTask",JSON.stringify(tasks));
                   }
               }
-              // Eliminar elementos del array principal
+              // Delete elements from principal array
               for (let e = 0; e < listTask.length; e++) {
                 if (listTask[e].title === taskTitle) {
                   listTask.splice(e,1);
@@ -127,7 +127,7 @@ function getStorageTask(){
     });
   }
 }
-// TASK INTERACTIVIDAD
+
 let addBtn = document.querySelector(".bxs-plus-circle");
 let closeBtn = document.querySelector(".bxs-x-circle");
 
@@ -138,10 +138,10 @@ closeBtn.addEventListener("click",()=>{
   formTasks.classList.remove("visible");
   formEvents.classList.remove("visible");
 });
-// MENU PAGINACION
+
 let home = document.querySelector(".bxs-star");
 let calendar = document.querySelector(".bxs-calendar");
-let weather = document.querySelector(".bxs-sun");
+let weather = document.querySelector(".bxs-cloud-rain");
 
 let sectionTask = document.getElementById("task");
 let sectionSchedule = document.getElementById("scheduler");
@@ -167,8 +167,8 @@ weather.addEventListener("click",()=>{
 
 function removeDuplicates(arr1,arr2,newList){
   newList = arr1.concat(arr2)
-  for(var i=0; i< newList.length; ++i) {
-      for(var j=i+1; j<newList.length; ++j) {
+  for(let i= 0; i < newList.length; ++i) {
+      for(let j= i+1; j <newList.length; ++j) {
           if(newList[i].title === newList[j].title) {
               newList.splice(j, 1);
           }
