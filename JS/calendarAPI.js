@@ -1,7 +1,7 @@
-import { cardsEvents,createEvent,editBtn,deleteBtn,formEvents,createBtn,editEvent,submitContainer} from "./functions.js"
+import { cardsEvents,createEvent,formEvents,createBtn,editEvent,submitContainer} from "./functions.js"
 import { cleantForm} from "./cleanform-alertas.js"
 
-const CALENDAR_ID = 'primary';
+export const CALENDAR_ID = 'primary';
 const API_KEY = 'AIzaSyCSnNDQ8GMjmwRit7DWOQVAbvVTvnITaUY';
 const CLIENT_ID = '273520073899-hk28up4luntj9v55qhq4lo8eni2efm78.apps.googleusercontent.com';
 const DISCOVERY_DOC = 'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest';
@@ -19,8 +19,8 @@ let tokenClient;
 let gapiInited = false;
 let gisInited = false;
 
-authorize_button.style.display= 'hidden';
-signout_button.style.display= 'hidden';
+authorize_button.style.visibility= 'hidden';
+signout_button.style.display= 'none';
 
 
 function gapiLoaded() {
@@ -39,16 +39,16 @@ function gisLoaded() {
     tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
       scope: SCOPES,
-      callback: '', // defined later
+      prompt: 'consent',
+      callback: '',
     });
     gisInited = true;
     maybeEnableButtons();
 }
 
 document.addEventListener('DOMContentLoaded', () =>{
-  gapiLoaded()
-  gisLoaded()
-  
+  gapiLoaded();
+  gisLoaded();
 })
 authorize_button.addEventListener('click',(e) => {
   e.stopPropagation();
@@ -58,25 +58,29 @@ signout_button.addEventListener('click',(e) =>{
   e.stopPropagation();
   handleSignoutClick();
 })
+
 function maybeEnableButtons() {
     if (gapiInited && gisInited) {
       authorize_button.style.visibility= 'visible';
     }
 }
-// Sign in the user upon button click.
+
 function handleAuthClick() {
     tokenClient.callback = async (resp) => {
     if (resp.error !== undefined) {
     throw (resp);
     }
     signout_button.style.display= 'block';
+    
     authorize_button.innerText = 'Refresh';
-    await listUpcomingEvents(); //Funcion para listar y crear eventos
-    addEventBtn.style.display = "block";
     emptyEventsList.style.display = "none";
-    // RE-ESTABLECIENDO AL DISEÑO ORIGINAL
+    await listUpcomingEvents();
+    addEventBtn.style.display = "block";
+
     signout_button.style.fontFamily = "Wix Madefor Display";
     authorize_button.style.fontFamily = "Wix Madefor Display";
+    signout_button.style.backgroundColor = "var(--purple-white)";
+    authorize_button.style.backgroundColor = "var(--purple-white)";
   };
   
   if (gapi.client.getToken() === null) {
@@ -122,12 +126,14 @@ async function listUpcomingEvents() {
       return;
     }
     const events = response.result.items;
+
     if (!events || events.length == 0) {
-      document.getElementById('content').innerText = 'No events found.';
+      emptyEventsList.style.display = "block";
       return;
     }
     cardsEvents(events)
   }
+
   closeBtn.addEventListener("click",()=>{
     formEvents.classList.remove("visible");
     cleantForm();

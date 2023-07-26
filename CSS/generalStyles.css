@@ -2,7 +2,6 @@ section{
     width: 100%;
     height: auto;
 }
-/* ESTILOS GENERALES*/
     h1,.schedule-title, .weather-design h3{
         letter-spacing: 3px;
     }

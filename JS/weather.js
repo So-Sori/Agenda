@@ -7,7 +7,7 @@ let temp= document.getElementById("temp");
 let humd= document.getElementById("humd");
 let wind= document.getElementById("wind");
 
-let weekDay = {
+let weekDayArr = {
     0:'Sunday',
     1:'Monday',
     2:'Tuesday',
@@ -51,8 +51,8 @@ function fetchDataFiveDays(position){
 }
 function createCardCurrentTime(weather) {
     let currentDay = new Date();
-    let weekday = currentDay.getDay();
-    let completeDate = `${weekDay[weekday]} ${currentDay.getDate()} • ${currentDay.getMonth()+1} • ${currentDay.getFullYear()}`;
+    let weekDay = currentDay.getDay();
+    let completeDate = `${weekDayArr[weekDay]} ${currentDay.getDate()} • ${currentDay.getMonth()+1} • ${currentDay.getFullYear()}`;
     day.textContent = completeDate;
 
     ubication.textContent = weather.name
@@ -72,10 +72,10 @@ function createFiveDaysWeather(weather) {
 
     for (let i = 0; i <= weather.list.length; i+=8) {
         let date = new Date(weather.list[i].dt_txt);
-        let weekday = date.getDay();
+        let weekDay = date.getDay();
         
         lis[count].innerHTML = `
-            <h2>${weekDayShort[weekday]}</h2>
+            <h2>${weekDayShort[weekDay]}</h2>
             <p>${Math.round(weather.list[i].main.temp)}°C</p>
             <img src="https://openweathermap.org/img/wn/${weather.list[i].weather[0].icon}@4x.png" alt="weather ${weather.list[i].weather[0].main}">
             <p class="weather-time">${weather.list[i].weather[0].main}</p>
@@ -102,10 +102,10 @@ export function funcionInit() {
 	}
 
 	const opcionesDeSolicitud = {
-		enableHighAccuracy: true, // Alta precisión
-        maximumAge: 0 // No queremos caché
+		enableHighAccuracy: true, // Hight presitionn
+        maximumAge: 0 // No cache
 	};
-	// Solicitar
+
 	navigator.geolocation.getCurrentPosition(onUbicacionConcedida, onErrorDeUbicacion, opcionesDeSolicitud);
 
 };

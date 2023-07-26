@@ -1,4 +1,5 @@
 import { cleantForm,success, error } from "./cleanform-alertas.js";
+import { CALENDAR_ID } from "./calendarAPI.js";
 
 export let formEvents = document.getElementById("form-events");
 let events = document.getElementById("events");
@@ -18,7 +19,6 @@ export let createBtn = document.createElement("input");
 export let editEvent = document.createElement("input");
 export let submitContainer = document.querySelector("#form-events .submit-container");
 
-// CREACION DE EVENTOS
 export function cardsEvents(event) {
   for (let i = 0; i < event.length; i++) {
         
@@ -41,7 +41,7 @@ export function cardsEvents(event) {
 
     div.innerHTML = `
         <h3>Title</h3>
-        <p>${event[i].summary}</p>
+        <p>${event[i].summary ? event[i].summary : "<p>---</p>"}</p>
         <h3>Location</h3>
         <p>${event[i].location ? event[i].location : "<p>---</p>"}</p>
         <h3>Date</h3>
@@ -58,7 +58,7 @@ export function cardsEvents(event) {
   }
   currentEvent = event;
 }
-// GET INVETES
+
 export function getInveted(attendees) {
   let invetedArr = inveted.value.split(",");
   if (invetedArr !== "") {
@@ -71,14 +71,14 @@ export function getInveted(attendees) {
   }
   return attendees;
 }
-//CREAR NUEVOS EVENTOS
+
 export function createEvent() {
   let attendees = [];
   createBtn.addEventListener("click",(e)=>{
     e.preventDefault();
     e.stopImmediatePropagation();
     return gapi.client.calendar.events.insert({
-      'calendarId': 'primary',
+      'calendarId': `${CALENDAR_ID}`,
       'summary': summary.value,
       'location': place.value,
       'description': description.value,
@@ -107,7 +107,7 @@ export function createEvent() {
           function(err) { error(err) });
   });
 }
-// EDIT BTN
+
 export function editBtn(){
   let editBtn = document.createElement('i');
   editBtn.classList.add("bx");
@@ -128,7 +128,7 @@ export function editBtn(){
   return editBtn;
 }
 
-// OBTENER DATOS PARA EL FORM
+
 export function getDatasForm(currentId) {
   let summaryValue,locationValue,descriptionValue,startValue,endValue,invetedValue;
 
@@ -156,7 +156,7 @@ export function getDatasForm(currentId) {
   endDateUpdate = endValue;
   updateEvent();
 }
-// UPDATE DATA DESDE EL FORM
+
 export function updateEvent() {
   let attendees = [];
   editEvent.addEventListener("click",(e)=>{
@@ -164,7 +164,7 @@ export function updateEvent() {
     e.preventDefault();
     let currentId = currentEventId;
     return gapi.client.calendar.events.update({
-      "calendarId": "primary",
+      "calendarId": `${CALENDAR_ID}`,
       "eventId": `${currentId}`,
       "alwaysIncludeEmail": true,
       "sendNotifications": true,
@@ -200,7 +200,6 @@ export function updateEvent() {
   })
 }
 
-// DELETE BTN
 export function deleteBtn(){
   let deleteBtn = document.createElement('i');
   deleteBtn.classList.add("bx");
@@ -225,9 +224,10 @@ export function deleteBtn(){
   })
   return deleteBtn;
 }
+
 export function deleteEvents(currentId) {
   return gapi.client.calendar.events.delete({
-    "calendarId": "primary",
+    "calendarId": `${CALENDAR_ID}`,
     "eventId": `${currentId}`
   })
       .then(function(response) {
