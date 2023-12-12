@@ -63,6 +63,9 @@
     width: 100%;
     padding: 2px;
 }
+.events a{
+    word-break: break-all;
+}
 .events .card-event-calendar .bx-calendar-edit,.bx-x{
     font-size: 2em;
     margin: 10px;
